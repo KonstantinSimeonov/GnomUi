@@ -8,8 +8,6 @@
     {
         private string content;
 
-        public IStyle Style { get; set; }
-
         public TextElement(string content)
         {
             this.content = content;

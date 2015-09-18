@@ -7,13 +7,13 @@
 
     public class Node : Element, INodeElement
     {
-        protected static Action<IElement> empty = (element) => { };
+        protected static readonly Action<IElement> Empty = (element) => { };
 
         public IList<IElement> Children { get; set; }
 
         public Node()
         {
-            this.OnClick = empty;
+            this.OnClick = Empty;
             this.Children = new List<IElement>();
         }
 
@@ -30,8 +30,6 @@
             this.Children.Remove(element);
             return this;
         }
-
-        public IStyle Style { get; set; }
 
         public override void Display(int x, int y)
         {
