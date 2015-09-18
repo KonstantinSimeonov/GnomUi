@@ -6,6 +6,7 @@
 
     public abstract class Element : IElement
     {
+        public string Id { get; set; }
 
         public IStyle Style { get; set; }
 
