@@ -8,6 +8,8 @@
     {
         public string Id { get; set; }
 
+        public string Class { get; set; }
+
         public IStyle Style { get; set; }
 
         public abstract void Display(int x, int y);
