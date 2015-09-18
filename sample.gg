@@ -1,0 +1,8 @@
+box #container .box
+	box #btn-container
+		:Controls
+		button #restart .ctrl-btn
+		button #undo .ctrl-btn
+		button #highscore .ctrl-btn
+	box #field
+		// need some way to template field here?

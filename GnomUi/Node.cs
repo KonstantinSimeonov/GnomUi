@@ -32,7 +32,7 @@ namespace GnomUi
         public override void Display(int x, int y)
         {
             this.Style.AbsPaddingLeft = this.Style.PaddingLeft + x;
-            this.Style.AbsPaddingTop = this.Style.AbsPaddingTop + y;
+            this.Style.AbsPaddingTop = this.Style.PaddingTop + y;
             this.ApplyStyleToConsole(this.Style);
             var counter = this.Style.AbsPaddingTop;
 
@@ -51,7 +51,7 @@ namespace GnomUi
         private string[] Render()
         {
 
-            var topBottomBorder = ' '+new string('_', this.Style.Width - 2);
+            var topBottomBorder = ' ' + new string('_', this.Style.Width - 2);
             var result = new string[this.Style.Height];
             result[0] = (topBottomBorder);
 
@@ -60,7 +60,7 @@ namespace GnomUi
                 result[i] = ('|' + new string(' ', this.Style.Width - 2) + '|');
             }
 
-            result[result.Length - 1] = ('|' + new string('_', this.Style.Width-2) +'|');
+            result[result.Length - 1] = ('|' + new string('_', this.Style.Width - 2) + '|');
 
             return result;
         }

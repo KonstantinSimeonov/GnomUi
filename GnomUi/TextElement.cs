@@ -10,7 +10,7 @@ namespace GnomUi
     {
         private string content;
 
-        public IStyle style { get; set; }
+        public IStyle Style { get; set; }
 
         public TextElement(string content)
         {
@@ -19,9 +19,9 @@ namespace GnomUi
 
         public override void Display(int x, int y)
         {
-            this.style.AbsPaddingLeft = this.style.PaddingLeft + x;
-            this.style.AbsPaddingTop = this.style.AbsPaddingTop + y;
-            this.ApplyStyleToConsole(this.style);
+            this.Style.AbsPaddingLeft = this.Style.PaddingLeft + x;
+            this.Style.AbsPaddingTop = this.Style.AbsPaddingTop + y;
+            this.ApplyStyleToConsole(this.Style);
 
             Console.Write(this.content);
         }

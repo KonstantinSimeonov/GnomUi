@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using GnomUi;
 
-namespace Test
+namespace Demo
 {
     class Program
     {
@@ -33,7 +33,7 @@ namespace Test
             };
 
             var txt = new TextElement("Click");
-            txt.style = new Style()
+            txt.Style = new Style()
             {
                 PaddingLeft = 1,
                 PaddingTop = 1,
@@ -52,8 +52,8 @@ namespace Test
                 Height = 5
             };
 
-            var kur = new TextElement("kur");
-            kur.style = new Style()
+            var kur = new TextElement("ui");
+            kur.Style = new Style()
             {
                 PaddingLeft = 1,
                 PaddingTop = 1,
@@ -68,9 +68,26 @@ namespace Test
             box.AddChild(btn);
             box.AddChild(div);
 
+            var btn2 = new Node();
+            btn2.Style = new Style()
+            {
+                PaddingLeft = 10,
+                PaddingTop = 9,
+                Color = ConsoleColor.Magenta,
+                Width = 12,
+                Height = 3
+            };
+
+            var txt3 = new TextElement("gnom");
+            txt3.Style = new Style();
+
+            btn2.AddChild(txt3);
+
+            box.AddChild(btn2);
+
             box.Display(0, 0);
 
-            Console.SetCursorPosition(0, 15);
+            Console.SetCursorPosition(0, 20);
         }
     }
 }
