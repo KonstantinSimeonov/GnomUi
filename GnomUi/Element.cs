@@ -8,7 +8,8 @@ namespace GnomUi
 {
     public abstract class Element : IElement
     {
-        public IStyle style { get; set; }
+
+        public IStyle Style { get; set; }
 
         public abstract void Display(int x, int y);
 

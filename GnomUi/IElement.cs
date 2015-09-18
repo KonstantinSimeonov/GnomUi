@@ -5,7 +5,7 @@ namespace GnomUi
 {
     public interface IElement
     {
-        IStyle style { get; set; }
+        IStyle Style { get; set; }
         void Display(int x, int y);
     }
 }

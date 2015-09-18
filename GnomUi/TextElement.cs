@@ -22,6 +22,7 @@ namespace GnomUi
             this.style.AbsPaddingLeft = this.style.PaddingLeft + x;
             this.style.AbsPaddingTop = this.style.AbsPaddingTop + y;
             this.ApplyStyleToConsole(this.style);
+
             Console.Write(this.content);
         }
     }

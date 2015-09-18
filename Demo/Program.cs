@@ -10,31 +10,10 @@ namespace Test
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            //var topBottomBorder = ' '+new string('_', 18);
-            //var sideBottomBorder = string.Join(string.Empty, Enumerable.Repeat("=\n", 10));
-            ////Console.SetCursorPosition(0, 1);
-            ////Console.Write(sideBottomBorder);
-            ////Console.SetCursorPosition(0, 0);
-            ////Console.Write(topBottomBorder);
-            ////Console.SetCursorPosition(20, 1);
-            ////Console.Write(sideBottomBorder);
-            ////Console.SetCursorPosition(0, 11);
-            ////Console.Write(topBottomBorder);
-
-            //var result = new StringBuilder();
-            //result.AppendLine(topBottomBorder);
-            //for (int i = 0; i < 7; i++)
-            //{
-            //    result.AppendLine('|' + new string(' ', 18) + '|');
-            //}
-            //result.Append('|' + new string('_', 18) +'|');
-
-            //Console.WriteLine(result);
-
             var box = new Node();
-            box.style = new Style() 
+            box.Style = new Style() 
             {
                 PaddingLeft = 1,
                 PaddingTop = 1,
@@ -44,7 +23,7 @@ namespace Test
             };
 
             var btn = new Node();
-            btn.style = new Style()
+            btn.Style = new Style()
             {
                 PaddingLeft = 1,
                 PaddingTop = 1,
@@ -64,7 +43,7 @@ namespace Test
             };
 
             var div = new Node();
-            div.style = new Style()
+            div.Style = new Style()
             {
                 PaddingLeft = 15,
                 PaddingTop = 1,
