@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GnomUi
+﻿namespace GnomUi
 {
+    using System;
+    using System.Collections.Generic;
+
+    using GnomUi.Contracts;
+
     public class Node : Element, INodeElement
     {
+        protected static Action<IElement> empty = (element) => { };
+
         public IList<IElement> Children { get; set; }
 
         public Node()
         {
+            this.OnClick = empty;
             this.Children = new List<IElement>();
         }
+
+        public Action<IElement> OnClick { get; set; }
 
         public INodeElement AddChild(IElement element)
         {

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GnomUi
+﻿namespace GnomUi
 {
+    using System;
+
+    using GnomUi.Contracts;
+
     public abstract class Element : IElement
     {
 

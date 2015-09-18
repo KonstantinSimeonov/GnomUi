@@ -40,9 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Element.cs" />
-    <Compile Include="IElement.cs" />
-    <Compile Include="INodeElement.cs" />
-    <Compile Include="IStyle.cs" />
+    <Compile Include="Contracts\IElement.cs" />
+    <Compile Include="Contracts\INodeElement.cs" />
+    <Compile Include="Contracts\IPressable.cs" />
+    <Compile Include="Contracts\IStyle.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Style.cs" />

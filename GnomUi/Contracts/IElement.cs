@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace GnomUi
+﻿namespace GnomUi.Contracts
 {
     public interface IElement
     {
