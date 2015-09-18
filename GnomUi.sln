@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GnomUi", "GnomUi\GnomUi.csproj", "{A6E2A768-9CF0-405D-8287-D9C96DA16D14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{F31FA4FA-0E09-42A2-AB58-58A8AC893FD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6E2A768-9CF0-405D-8287-D9C96DA16D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E2A768-9CF0-405D-8287-D9C96DA16D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E2A768-9CF0-405D-8287-D9C96DA16D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E2A768-9CF0-405D-8287-D9C96DA16D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F31FA4FA-0E09-42A2-AB58-58A8AC893FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F31FA4FA-0E09-42A2-AB58-58A8AC893FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F31FA4FA-0E09-42A2-AB58-58A8AC893FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F31FA4FA-0E09-42A2-AB58-58A8AC893FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
