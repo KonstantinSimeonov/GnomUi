@@ -68,7 +68,7 @@ namespace Demo
             box.AddChild(btn);
             box.AddChild(div);
 
-            var btn2 = new Node();
+            var btn2 = new Node(true);
             btn2.Style = new Style()
             {
                 PaddingLeft = 10,
@@ -77,7 +77,7 @@ namespace Demo
                 Width = 12,
                 Height = 3
             };
-
+            btn2.OnClick = (target) => { Console.BackgroundColor = ConsoleColor.DarkGreen; };
             var txt3 = new TextElement("gnom");
             txt3.Style = new Style();
 
@@ -88,6 +88,13 @@ namespace Demo
             box.Display(0, 0);
 
             Console.SetCursorPosition(0, 20);
+
+            var keyInfo = Console.ReadKey();
+
+            if(keyInfo.Key == ConsoleKey.Enter)
+            {
+                btn2.FireEvent();
+            }
         }
     }
 }

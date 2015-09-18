@@ -7,17 +7,28 @@
 
     public class Node : Element, INodeElement
     {
+        // i don't like null ref exceptions
         protected static readonly Action<IElement> Empty = (element) => { };
 
-        public IList<IElement> Children { get; set; }
-
-        public Node()
+        // the bool parameter is for development purposes and will probably be removed for release
+        public Node(bool selected = false)
         {
             this.OnClick = Empty;
             this.Children = new List<IElement>();
+            this.IsSelected = selected;
         }
 
+        // INodeElement properties
+
+        public IList<IElement> Children { get; set; }
+
+        // IPressable properties
+
         public Action<IElement> OnClick { get; set; }
+
+        public bool IsSelected { get; private set; }
+
+        // INodeElement methods
 
         public INodeElement AddChild(IElement element)
         {
@@ -31,12 +42,26 @@
             return this;
         }
 
+        // IPressable methods
+
+        public void FireEvent()
+        {
+            this.OnClick(this);
+        }
+
+        // inherited and private methods
+
         public override void Display(int x, int y)
         {
             this.Style.AbsPaddingLeft = this.Style.PaddingLeft + x;
             this.Style.AbsPaddingTop = this.Style.PaddingTop + y;
             this.ApplyStyleToConsole(this.Style);
             var counter = this.Style.AbsPaddingTop;
+
+            if(this.IsSelected)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+            }
 
             foreach (var line in this.Render())
             {

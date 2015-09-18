@@ -6,6 +6,7 @@
 
     public class Style : IStyle
     {
+        // default style for all elements
         private int paddingLeft = 1;
         private int paddingTop = 1;
         private int width = Console.BufferWidth - 2;

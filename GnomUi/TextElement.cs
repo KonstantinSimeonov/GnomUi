@@ -2,8 +2,6 @@
 {
     using System;
 
-    using GnomUi.Contracts;
-
     public class TextElement : Element
     {
         private string content;

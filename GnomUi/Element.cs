@@ -23,6 +23,7 @@
 
             private set
             {
+                // a validation : O
                 if(value != null && this.parent != null)
                 {
                     throw new InvalidOperationException("gnom doesnt allow changing the parent of an element that already has a parent");
