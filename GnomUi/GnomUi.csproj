@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\ISelectable.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="Contracts\IElement.cs" />
     <Compile Include="Contracts\INodeElement.cs" />

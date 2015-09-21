@@ -2,10 +2,9 @@
 {
     using System;
 
-    public interface IPressable
+    public interface IPressable : ISelectable
     {
         Action<IElement> OnClick { get; set; }
-        bool IsSelected { get; }
 
         void FireEvent();
     }
