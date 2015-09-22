@@ -1,7 +1,7 @@
 ﻿namespace GnomUi.Contracts
 {
-    public interface ISelectable
+    public interface ISelectable : IGnomeGraphElement
     {
-        bool IsSelected { get; }
+        bool IsSelected { get; set; }
     }
 }
