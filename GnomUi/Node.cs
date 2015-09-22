@@ -15,6 +15,7 @@
         {
             this.OnClick = Empty;
             this.Children = new List<IElement>();
+            this.Neighbors = new Dictionary<ConsoleKey, ISelectable>();
             this.IsSelected = selected;
         }
 
@@ -26,7 +27,9 @@
 
         public Action<IElement> OnClick { get; set; }
 
-        public bool IsSelected { get; private set; }
+        public bool IsSelected { get; set; }
+
+        public IDictionary<ConsoleKey, ISelectable> Neighbors { get; private set; }
 
         // INodeElement methods
 
