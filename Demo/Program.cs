@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using GnomUi;
+using GnomUi.Contracts;
 
 namespace Demo
 {
@@ -12,8 +13,19 @@ namespace Demo
     {
         static void Main()
         {
+            // convinience
+            var keys = new Dictionary<string, ConsoleKey>()
+            {
+                {"u", ConsoleKey.UpArrow},
+                {"d", ConsoleKey.DownArrow},
+                {"l", ConsoleKey.LeftArrow},
+                {"r", ConsoleKey.RightArrow}
+
+            };
+
+            // sample elements
             var box = new Node();
-            box.Style = new Style() 
+            box.Style = new Style()
             {
                 PaddingLeft = 1,
                 PaddingTop = 1,
@@ -32,7 +44,9 @@ namespace Demo
                 Height = 3
             };
 
-            var txt = new TextElement("Click");
+
+
+            var txt = new TextElement("btn");
             txt.Style = new Style()
             {
                 PaddingLeft = 1,
@@ -52,7 +66,7 @@ namespace Demo
                 Height = 5
             };
 
-            var kur = new TextElement("ui");
+            var kur = new TextElement("div");
             kur.Style = new Style()
             {
                 PaddingLeft = 1,
@@ -78,8 +92,15 @@ namespace Demo
                 Height = 3
             };
             btn2.OnClick = (target) => { Console.BackgroundColor = ConsoleColor.DarkGreen; };
-            var txt3 = new TextElement("gnom");
+            var txt3 = new TextElement("btn2");
             txt3.Style = new Style();
+
+            // link the elements in a graph
+            btn.Neighbors.Add(keys["r"], div);
+            btn.Neighbors.Add(keys["d"], btn2);
+            div.Neighbors.Add(keys["l"], btn);
+            div.Neighbors.Add(keys["d"], btn2);
+            btn2.Neighbors.Add(keys["u"], div);
 
             btn2.AddChild(txt3);
 
@@ -89,11 +110,46 @@ namespace Demo
 
             Console.SetCursorPosition(0, 20);
 
-            var keyInfo = Console.ReadKey();
+            //var keyInfo = Console.ReadKey();
 
-            if(keyInfo.Key == ConsoleKey.Enter)
+            //if(keyInfo.Key == ConsoleKey.Enter)
+            //{
+            //    btn2.FireEvent();
+            //}
+
+
+            // attach event functions
+            btn.OnClick = target =>
             {
-                btn2.FireEvent();
+                Console.BackgroundColor = ConsoleColor.White;
+            };
+
+            ISelectable selected = btn2;
+
+            Console.CursorVisible = false;
+
+            // traverse the UI graph with the keyboard arrows
+            while (true)
+            {
+                var keyInfo = Console.ReadKey();
+
+                if(keyInfo.Key == ConsoleKey.Enter && selected as IPressable != null)
+                {
+                    (selected as IPressable).FireEvent();
+                }
+                else if(selected.Neighbors.ContainsKey(keyInfo.Key))
+                {
+                    selected.IsSelected = false;
+                    selected = selected.Neighbors[keyInfo.Key];
+                    selected.IsSelected = true;
+                }
+                else if(keyInfo.Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+
+                Console.Clear();
+                box.Display(0, 0);
             }
         }
     }
