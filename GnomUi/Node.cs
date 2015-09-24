@@ -7,6 +7,14 @@
 
     public class Node : Element, INodeElement
     {
+        private static readonly IDictionary<ConsoleKey, ConsoleKey> ReverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
+            {
+                { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
+                { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
+                { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
+                { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
+            };
+        
         // i don't like null ref exceptions
         protected static readonly Action<IElement> Empty = (element) => { };
 
@@ -51,17 +59,9 @@
         {
             this.Neighbors.Add(key, element);
 
-            var reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
+            if (!element.Neighbors.ContainsKey(ReverseKeys[key]))
             {
-                { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
-                { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
-                { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
-                { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
-            };
-
-            if (!element.Neighbors.ContainsKey(reverseKeys[key]))
-            {
-                element.Neighbors.Add(reverseKeys[key], this);
+                element.Neighbors.Add(ReverseKeys[key], this);
             }
         }
 
@@ -78,7 +78,7 @@
         {
             this.Style.AbsPaddingLeft = this.Style.PaddingLeft + x;
             this.Style.AbsPaddingTop = this.Style.PaddingTop + y;
-            this.ApplyStyleToConsole(this.Style);
+            ApplyStyleToConsole(this.Style);
             var counter = this.Style.AbsPaddingTop;
 
             if (this.IsSelected)
@@ -100,7 +100,6 @@
 
         private string[] Render()
         {
-
             var topBottomBorder = ' ' + new string('_', this.Style.Width - 2);
             var result = new string[this.Style.Height];
             result[0] = (topBottomBorder);
@@ -114,5 +113,7 @@
 
             return result;
         }
+
+
     }
 }

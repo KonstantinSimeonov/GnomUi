@@ -15,7 +15,7 @@
         {
             this.Style.AbsPaddingLeft = this.Style.PaddingLeft + x;
             this.Style.AbsPaddingTop = this.Style.PaddingTop + y - 1;
-            this.ApplyStyleToConsole(this.Style);
+            ApplyStyleToConsole(this.Style);
 
             Console.Write(this.content);
         }
