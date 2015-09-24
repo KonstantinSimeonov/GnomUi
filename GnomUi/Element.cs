@@ -34,7 +34,7 @@
 
         public abstract void Display(int x, int y);
 
-        protected virtual void ApplyStyleToConsole(IStyle style)
+        protected static void ApplyStyleToConsole(IStyle style)
         {
             Console.ForegroundColor = style.Color;
             Console.SetCursorPosition(style.AbsPaddingLeft, style.AbsPaddingTop);
