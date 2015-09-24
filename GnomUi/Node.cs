@@ -55,7 +55,7 @@
 
         // ISelectable methods
 
-        public void AddNeighbor(ConsoleKey key, ISelectable element)
+        public void LinkTo(ConsoleKey key, ISelectable element)
         {
             this.Neighbors.Add(key, element);
 
@@ -74,17 +74,22 @@
 
         // inherited and private methods
 
+        // INTERESTING: the template method pattern is strong with this one
         public override void Display(int x, int y)
         {
+            // calculate padding
             this.Style.AbsPaddingLeft = this.Style.PaddingLeft + x;
             this.Style.AbsPaddingTop = this.Style.PaddingTop + y;
-            ApplyStyleToConsole(this.Style);
-            var counter = this.Style.AbsPaddingTop;
 
+            // apply styles
+            ApplyStyleToConsole(this.Style);
             if (this.IsSelected)
             {
                 Console.ForegroundColor = ConsoleColor.White;
             }
+
+            // draw
+            var counter = this.Style.AbsPaddingTop;
 
             foreach (var line in this.Render())
             {
@@ -92,6 +97,7 @@
                 Console.WriteLine(line);
             }
 
+            // display children
             foreach (var child in this.Children)
             {
                 child.Display(this.Style.AbsPaddingLeft + 1, this.Style.AbsPaddingTop + 1);

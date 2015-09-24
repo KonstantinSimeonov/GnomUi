@@ -95,9 +95,9 @@
 
             // link the elements in a graph
 
-            btn.AddNeighbor(keys["r"], div);
-            btn.AddNeighbor(keys["d"], btn2);
-            div.AddNeighbor(keys["d"], btn2);
+            btn.LinkTo(keys["r"], div);
+            btn.LinkTo(keys["d"], btn2);
+            div.LinkTo(keys["d"], btn2);
 
             btn2.AddChild(txt3);
 

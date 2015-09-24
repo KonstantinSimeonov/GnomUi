@@ -6,6 +6,6 @@
     {
         bool IsSelected { get; set; }
 
-        void AddNeighbor(ConsoleKey key, ISelectable element);
+        void LinkTo(ConsoleKey key, ISelectable element);
     }
 }
