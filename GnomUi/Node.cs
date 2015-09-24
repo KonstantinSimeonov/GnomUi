@@ -55,11 +55,11 @@
 
         // ISelectable methods
 
-        public void LinkTo(ConsoleKey key, ISelectable element)
+        public void LinkTo(ConsoleKey key, ISelectable element, bool doubly = true)
         {
             this.Neighbors.Add(key, element);
 
-            if (!element.Neighbors.ContainsKey(ReverseKeys[key]))
+            if (!element.Neighbors.ContainsKey(ReverseKeys[key]) && doubly)
             {
                 element.Neighbors.Add(ReverseKeys[key], this);
             }

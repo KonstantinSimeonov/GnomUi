@@ -6,6 +6,6 @@
     {
         bool IsSelected { get; set; }
 
-        void LinkTo(ConsoleKey key, ISelectable element);
+        void LinkTo(ConsoleKey key, ISelectable element, bool doubly = true);
     }
 }
