@@ -45,6 +45,26 @@
             return this;
         }
 
+        // ISelectable methods
+
+        public void AddNeighbor(ConsoleKey key, ISelectable element)
+        {
+            this.Neighbors.Add(key, element);
+
+            var reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
+            {
+                { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
+                { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
+                { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
+                { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
+            };
+
+            if (!element.Neighbors.ContainsKey(reverseKeys[key]))
+            {
+                element.Neighbors.Add(reverseKeys[key], this);
+            }
+        }
+
         // IPressable methods
 
         public void FireEvent()
@@ -61,7 +81,7 @@
             this.ApplyStyleToConsole(this.Style);
             var counter = this.Style.AbsPaddingTop;
 
-            if(this.IsSelected)
+            if (this.IsSelected)
             {
                 Console.ForegroundColor = ConsoleColor.White;
             }

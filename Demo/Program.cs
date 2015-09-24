@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using GnomUi;
-using GnomUi.Contracts;
-
-namespace Demo
+﻿namespace Demo
 {
+    using System;
+    using System.Collections.Generic;
+
+    using GnomUi;
+    using GnomUi.Contracts;
+
     class Program
     {
         static void Main()
         {
-            // convinience
+            // convenience
             var keys = new Dictionary<string, ConsoleKey>()
-            {
+           {
                 {"u", ConsoleKey.UpArrow},
                 {"d", ConsoleKey.DownArrow},
                 {"l", ConsoleKey.LeftArrow},
                 {"r", ConsoleKey.RightArrow}
 
-            };
+           };
 
             // sample elements
+
             var box = new Node();
             box.Style = new Style()
             {
@@ -96,11 +94,10 @@ namespace Demo
             txt3.Style = new Style();
 
             // link the elements in a graph
-            btn.Neighbors.Add(keys["r"], div);
-            btn.Neighbors.Add(keys["d"], btn2);
-            div.Neighbors.Add(keys["l"], btn);
-            div.Neighbors.Add(keys["d"], btn2);
-            btn2.Neighbors.Add(keys["u"], div);
+
+            btn.AddNeighbor(keys["r"], div);
+            btn.AddNeighbor(keys["d"], btn2);
+            div.AddNeighbor(keys["d"], btn2);
 
             btn2.AddChild(txt3);
 
@@ -133,17 +130,17 @@ namespace Demo
             {
                 var keyInfo = Console.ReadKey();
 
-                if(keyInfo.Key == ConsoleKey.Enter && selected as IPressable != null)
+                if (keyInfo.Key == ConsoleKey.Enter && selected as IPressable != null)
                 {
                     (selected as IPressable).FireEvent();
                 }
-                else if(selected.Neighbors.ContainsKey(keyInfo.Key))
+                else if (selected.Neighbors.ContainsKey(keyInfo.Key))
                 {
                     selected.IsSelected = false;
                     selected = selected.Neighbors[keyInfo.Key];
                     selected.IsSelected = true;
                 }
-                else if(keyInfo.Key == ConsoleKey.Escape)
+                else if (keyInfo.Key == ConsoleKey.Escape)
                 {
                     break;
                 }
