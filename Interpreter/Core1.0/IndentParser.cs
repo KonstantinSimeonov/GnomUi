@@ -44,10 +44,10 @@
 
             for (int i = start + 1; i < end; i++)
             {
-                //if (depth - sub[i].Depth() > 1)
-                //{
-                //    throw new ArgumentException("invalid gnome composition at " + root);
-                //}
+                if (sub[i].Depth() - sub[i - 1].Depth() > 1)
+                {
+                    throw new ArgumentException("Invalid gnome composition at row " + (i+1) + ". Node " + sub[i].Trim() + " has invalid tree depth.");
+                }
 
                 if (i == sub.Length - 1 || sub[i].Depth() <= depth)
                 {

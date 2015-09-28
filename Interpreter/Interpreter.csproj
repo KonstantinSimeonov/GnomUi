@@ -42,7 +42,7 @@
     <Compile Include="Contracts\IGnomInterpreter.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Core1.0\StringExtensions.cs" />
-    <Compile Include="Core1.0\Program.cs" />
+    <Compile Include="Core1.0\IndentParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
