@@ -6,9 +6,16 @@
     using GnomUi;
     using GnomUi.Contracts;
 
+    using Interpreter;
+
     class Program
     {
         static void Main()
+        {
+            GnomCompositeUiDemo();
+        }
+
+        public static void GnomCompositeUiDemo()
         {
             // convenience
             var keys = new Dictionary<string, ConsoleKey>()
