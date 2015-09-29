@@ -23,7 +23,26 @@
             this.styleMap = new Dictionary<string, IStyle>();
         }
 
-        public IDictionary<string, IStyle> ParseStylesToMap(string stylesheet)
+        public IGnomTree Parse(string[] args, string stylesheet)
+        {
+            this.ClearMaps();
+
+            var root = ParseRecursive(args[0], args, 1, args.Length);
+            var styles = ParseStylesToMap(stylesheet);
+            var tree = new GnomTree(root, this.idMap, this.classMap, styles);
+
+            ApplyStyleMapToTree(tree, styles);
+
+            return tree;
+        }
+
+        private void ClearMaps()
+        {
+            this.idMap.Clear();
+            this.classMap.Clear();
+        }
+
+        private static IDictionary<string, IStyle> ParseStylesToMap(string stylesheet)
         {
             var fragments = stylesheet.Split(new char[] { '.', '#' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -65,12 +84,12 @@
 
             var nextRoot = ParseToNode(root);
 
-            this.UpdateIdMap(nextRoot, start);
-            this.UpdateClassMap(nextRoot);
+            UpdateIdMap(nextRoot, start, this.idMap);
+            UpdateClassMap(nextRoot, this.classMap);
 
             for (int i = start + 1; i < end; i++)
             {
-                ThrowIfInvalidIndenting(sub, i);
+                ThrowIfInvalidIndenting(sub[i], sub[i - 1], i);
 
                 bool currentElementIsChildOfRoot = i == sub.Length - 1 || sub[i].Depth() <= depth;
 
@@ -93,34 +112,34 @@
 
             return nextRoot;
         }
- 
-        private void UpdateClassMap(INodeElement nextRoot)
+
+        private static void UpdateClassMap(INodeElement nextRoot, IDictionary<string, IList<IElement>> classMap)
         {
-            if (!this.classMap.ContainsKey(nextRoot.Class))
+            if (!classMap.ContainsKey(nextRoot.Class))
             {
-                this.classMap[nextRoot.Class] = new List<IElement>();
+                classMap[nextRoot.Class] = new List<IElement>();
             }
 
-            this.classMap[nextRoot.Class].Add(nextRoot);
+            classMap[nextRoot.Class].Add(nextRoot);
         }
- 
-        private void UpdateIdMap(INodeElement nextRoot, int start)
+
+        private static void UpdateIdMap(INodeElement nextRoot, int row, IDictionary<string, IElement> idMap)
         {
-            if (this.idMap.ContainsKey(nextRoot.Id))
+            if (idMap.ContainsKey(nextRoot.Id))
             {
-                throw new InvalidOperationException("Duplicate Ids in gnom resource at row " + (start) + ". Id name: " + nextRoot.Id);
+                throw new InvalidOperationException("Duplicate Ids in gnom resource at row " + (row) + ". Id name: " + nextRoot.Id);
             }
 
-            this.idMap.Add(nextRoot.Id, nextRoot);
+            idMap.Add(nextRoot.Id, nextRoot);
         }
- 
-        private void ThrowIfInvalidIndenting(string[] sub, int i)
+
+        private static void ThrowIfInvalidIndenting(string current, string previous, int row)
         {
-            bool currentElementHasInvalidIndent = sub[i].Depth() - sub[i - 1].Depth() > 1;
+            bool currentElementHasInvalidIndent = current.Depth() - previous.Depth() > 1;
 
             if (currentElementHasInvalidIndent)
             {
-                throw new ArgumentException("Invalid gnome composition at row " + (i + 1) + ". Node " + sub[i].Trim() + " has invalid tree depth.");
+                throw new ArgumentException("Invalid gnome composition at row " + (row + 1) + ". Node " + current.Trim() + " has invalid tree depth.");
             }
         }
 
@@ -157,26 +176,6 @@
 
             return parsedNode;
         }
-
-        public IGnomTree Parse(string[] args, string stylesheet)
-        {
-            this.ClearMaps();
-
-            var root = ParseRecursive(args[0], args, 1, args.Length);
-            var styles = this.ParseStylesToMap(stylesheet);
-            var tree = new GnomTree(root, this.idMap, this.classMap, styles);
-
-            ApplyStyleMapToTree(tree, styles);
-
-            return tree;
-        }
-
-        private void ClearMaps()
-        {
-            this.idMap.Clear();
-            this.classMap.Clear();
-        }
-
 
         private static void ApplyStyleMapToTree(IGnomTree tree, IDictionary<string, IStyle> map)
         {

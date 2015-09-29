@@ -14,39 +14,39 @@
         {
             // GnomCompositeUiDemo();
             var test = new IndentParser();
-            var input = new string[] 
-            {
-                "root #r .doc",
-                "    child1 #header .nav-bar",
-                "        :home",
-                "    child2 #container .full-size",
-                ""
-            };
+//            var input = new string[] 
+//            {
+//                "root #r .doc",
+//                "    child1 #header .nav-bar",
+//                "        :home",
+//                "    child2 #container .full-size",
+//                ""
+//            };
 
             
-            var style = @".doc
-                        left 3
-                        top 4
-                        color red";
-            var result = test.Parse(input, style);
-            var styleMap = test.ParseStylesToMap(style);
+//            var style = @".doc
+//                        left 3
+//                        top 4
+//                        color red";
+//            var result = test.Parse(input, style);
+//            var styleMap = test.ParseStylesToMap(style);
 
-            foreach (var item in styleMap)
-            {
-                Console.WriteLine(item);
-            }
+//            foreach (var item in styleMap)
+//            {
+//                Console.WriteLine(item);
+//            }
 
-            result.Styles = styleMap;
-            foreach (var item in result)
-            {
-                if (styleMap.ContainsKey(item.Class))
-                {
-                    item.Style = styleMap[item.Class];
-                }
+//            result.Styles = styleMap;
+//            foreach (var item in result)
+//            {
+//                if (styleMap.ContainsKey(item.Class))
+//                {
+//                    item.Style = styleMap[item.Class];
+//                }
 
-                Console.WriteLine(item.Style);
+//                Console.WriteLine(item.Style);
 
-            }
+//            }
 
 
             // result.Root.Display(0, 0);
