@@ -12,7 +12,7 @@
     {
         static void Main()
         {
-            GnomCompositeUiDemo();
+            // GnomCompositeUiDemo();
             //var test = new IndentParser();
             //var input = new string[] 
             //{
@@ -32,6 +32,28 @@
             //{
             //    Console.WriteLine(item);
             //}
+
+            var parser = new IndentParser();
+
+            var stylesheet = @".container
+                               color green
+                               left 5
+                               top 10
+                               height 3
+                               width 5
+                               
+                               #header
+                               color red
+                               left 3
+                               width 20
+                               height 8";
+            var result = parser.ParseStylesToMap(stylesheet);
+
+            foreach (var item in result)
+            {
+                Console.WriteLine(item.Key);
+                Console.WriteLine(item.Value);
+            }
 
         }
 

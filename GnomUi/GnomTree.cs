@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using GnomUi.Contracts;;
+    using GnomUi.Contracts;
 
     public class GnomTree : IGnomTree
     {

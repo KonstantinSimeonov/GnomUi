@@ -4,6 +4,7 @@
 
     using GnomUi.Contracts;
     using System.Collections.Generic;
+    using System.Text;
 
     public class Style : IStyle
     {
@@ -115,6 +116,18 @@
             {
                 this["color"] = value.ToString().ToLower();
             }
+        }
+
+        public override string ToString()
+        {
+            var result = new StringBuilder();
+
+            foreach (var pair in this.styleMap)
+            {
+                result.AppendLine(pair.ToString());
+            }
+
+            return result.ToString();
         }
     }
 }

@@ -1,56 +1,49 @@
 ﻿namespace Interpreter.Core
 {
     using System;
-    using System.Text;
+    using System.Collections.Generic;
+    using System.Linq;
 
     using GnomUi.Contracts;
     using GnomUi;
 
     public class IndentParser
     {
-        private static string[] input1 = new string[] 
+        public IDictionary<string, IStyle> ParseStylesToMap(string stylesheet)
         {
-            "box",
-            "    gnom",
-            "        durvo",
-            "        buhal",
-            "            godji",
-            "            godji",
-            "            godji",
-            "    machka",
-            "        kon",
-            "            godji",
-            "            kon2",
-            "        sopol",
-            "            smurdish",
-            
-        };
+            var fragments = stylesheet.Split(new char[] { '.', '#' }, StringSplitOptions.RemoveEmptyEntries);
 
-        private static string[] input2 = new string[] 
-        {
-            "doc",
-            "    zob",
-            "        UIlo Kendov",
-            "    domcho",
-            "    domcho",
-            "            ognqn",
-            ""
-        };
+            var result = new Dictionary<string, IStyle>();
 
-        private static StringBuilder result = new StringBuilder();
-
-        private static IStyle GetStyleFromRow(string row)
-        {
-            var split = row.Split(' ');
-
-            var result = new Style()
+            foreach (var style in fragments)
             {
-                
+                var trimmedStyle = style.Trim();
+                if (!string.IsNullOrEmpty(trimmedStyle))
+                {
+                    var parsedStyle = ParseStyle(style);
+                    result.Add(parsedStyle.Key, parsedStyle.Value);
+                }
+            }
 
-            };
-
-            return null;
+            return result;
         }
+
+        private static KeyValuePair<string, IStyle> ParseStyle(string style)
+        {
+            var rows = style.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
+            var result = new Style();
+
+            for (var i = 1; i < rows.Length; i++)
+            {
+                var splitRow = rows[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                result[splitRow[0]] = splitRow[1];
+            }
+
+            return new KeyValuePair<string, IStyle>(rows[0].Trim(), result);
+        }
+
         private INodeElement ParseRevursive(string parent, string root, string[] sub, int start, int end)
         {
             var depth = root.Depth() + 1;
@@ -77,7 +70,7 @@
             {
                 if (sub[i].Depth() - sub[i - 1].Depth() > 1)
                 {
-                    throw new ArgumentException("Invalid gnome composition at row " + (i+1) + ". Node " + sub[i].Trim() + " has invalid tree depth.");
+                    throw new ArgumentException("Invalid gnome composition at row " + (i + 1) + ". Node " + sub[i].Trim() + " has invalid tree depth.");
                 }
 
                 if (i == sub.Length - 1 || sub[i].Depth() <= depth)
