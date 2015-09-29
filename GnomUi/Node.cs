@@ -8,7 +8,7 @@
     public class Node : Element, INodeElement
     {
         
-        private static readonly IDictionary<ConsoleKey, ConsoleKey> ReverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
+        private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
             {
                 { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
                 { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
@@ -60,9 +60,9 @@
         {
             this.Neighbors.Add(key, element);
 
-            if (!element.Neighbors.ContainsKey(ReverseKeys[key]) && doubly)
+            if (!element.Neighbors.ContainsKey(reverseKeys[key]) && doubly)
             {
-                element.Neighbors.Add(ReverseKeys[key], this);
+                element.Neighbors.Add(reverseKeys[key], this);
             }
         }
 

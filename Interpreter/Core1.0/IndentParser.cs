@@ -37,8 +37,6 @@
             ""
         };
 
-        private static int index = 0;
-
         private static StringBuilder result = new StringBuilder();
 
         private static IStyle GetStyleFromRow(string row)

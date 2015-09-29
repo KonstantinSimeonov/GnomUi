@@ -12,19 +12,27 @@
     {
         static void Main()
         {
-            // GnomCompositeUiDemo();
-            var test = new IndentParser();
-            var input = new string[] 
-            {
-                "root #r .doc",
-                "    child1 #header .nav-bar",
-                "    child2 #container .full-size",
-                ""
-            };
+            GnomCompositeUiDemo();
+            //var test = new IndentParser();
+            //var input = new string[] 
+            //{
+            //    "root #r .doc",
+            //    "    child1 #header .nav-bar",
+            //    "    child2 #container .full-size",
+            //    ""
+            //};
 
-            var result = test.Parse(input);
+            //var result = test.Parse(input);
 
-            result.Display(0, 0);
+            //result.Display(0, 0);
+
+            //var dict = new Dictionary<string, int>().Init<string, int>(x => 3, y => 8, z => 10);
+
+            //foreach (var item in dict)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
         }
 
         public static void GnomCompositeUiDemo()

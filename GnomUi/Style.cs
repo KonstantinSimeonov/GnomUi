@@ -3,30 +3,64 @@
     using System;
 
     using GnomUi.Contracts;
+    using System.Collections.Generic;
 
     public class Style : IStyle
     {
+        private readonly IDictionary<string, string> styleMap = new Dictionary<string, string>()
+        {
+            { "left", "1" },
+            { "top", "1" },
+            { "height", "5" },
+            { "width", "5" },
+            { "color", "gray" },
+        };
+
+        private static readonly IDictionary<string, ConsoleColor> colors = new Dictionary<string, ConsoleColor>()
+        {
+            { "gray", ConsoleColor.Gray },
+            { "green", ConsoleColor.Green },
+            { "blue", ConsoleColor.Blue },
+            { "red", ConsoleColor.Red },
+            { "white", ConsoleColor.White },
+            { "yellow", ConsoleColor.Yellow },
+            { "magenta", ConsoleColor.Magenta },
+        };
+
         // default style for all elements
-        private int paddingLeft = 1;
-        private int paddingTop = 1;
-        private int width = Console.BufferWidth - 2;
-        private int height = Console.BufferWidth - 2;
-        private ConsoleColor color = ConsoleColor.Gray;
-        
+        //private int paddingLeft = 1;
+        //private int paddingTop = 1;
+        //private int width = Console.BufferWidth - 2;
+        //private int height = Console.BufferWidth - 2;
+        //private ConsoleColor color = ConsoleColor.Gray;
+
         public int AbsPaddingLeft { get; set; }
 
         public int AbsPaddingTop { get; set; }
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                return this.styleMap[propertyName];
+            }
+
+            set
+            {
+                this.styleMap[propertyName] = value;
+            }
+        }
 
         public int PaddingLeft
         {
             get
             {
-                return paddingLeft;
+                return int.Parse(this["left"]);
             }
 
             set
             {
-                this.paddingLeft = value;
+                this["left"] = value.ToString();
             }
         }
 
@@ -34,12 +68,12 @@
         {
             get
             {
-                return paddingTop;
+                return int.Parse(this["top"]);
             }
 
             set
             {
-                this.paddingTop = value;
+                this["top"] = value.ToString();
             }
         }
 
@@ -47,12 +81,12 @@
         {
             get
             {
-                return width;
+                return int.Parse(this["width"]);
             }
 
             set
             {
-                this.width = value;
+                this["width"] = value.ToString();
             }
         }
 
@@ -60,12 +94,12 @@
         {
             get
             {
-                return height;
+                return int.Parse(this["height"]);
             }
 
             set
             {
-                this.height = value;
+                this["height"] = value.ToString();
             }
         }
 
@@ -73,12 +107,13 @@
         {
             get
             {
-                return color;
+                var c = this["color"];
+                return colors[c];
             }
 
             set
             {
-                this.color = value;
+                this["color"] = value.ToString().ToLower();
             }
         }
     }
