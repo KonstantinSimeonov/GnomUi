@@ -1,4 +1,4 @@
-﻿namespace Interpreter
+﻿namespace Interpreter.Core
 {
     using System;
     using System.Collections.Generic;
@@ -8,9 +8,9 @@
 
     using Interpreter.Contracts;
 
-    public class Core : IGnomInterpreter
+    public class InterpreterCore : IGnomInterpreter
     {
-        public Core()
+        public InterpreterCore()
         {
         }
         

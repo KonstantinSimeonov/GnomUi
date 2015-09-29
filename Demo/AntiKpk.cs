@@ -6,13 +6,25 @@
     using GnomUi;
     using GnomUi.Contracts;
 
-    using Interpreter;
+    using Interpreter.Core;
 
-    class Program
+    class AntiKpk
     {
         static void Main()
         {
-            GnomCompositeUiDemo();
+            // GnomCompositeUiDemo();
+            var test = new IndentParser();
+            var input = new string[] 
+            {
+                "root #r .doc",
+                "    child1 #header .nav-bar",
+                "    child2 #container .full-size",
+                ""
+            };
+
+            var result = test.Parse(input);
+
+            result.Display(0, 0);
         }
 
         public static void GnomCompositeUiDemo()

@@ -7,6 +7,7 @@
 
     public class Node : Element, INodeElement
     {
+        
         private static readonly IDictionary<ConsoleKey, ConsoleKey> ReverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
             {
                 { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
@@ -117,6 +118,7 @@
             
             foreach (var child in this.Children)
             {
+                
                 child.Display(this.Style.AbsPaddingLeft + 1, this.Style.AbsPaddingTop + 1);
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace TreeParsing
+﻿namespace Interpreter
 {
     internal static class ImAnnoyed
     {

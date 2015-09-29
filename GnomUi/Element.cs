@@ -36,6 +36,7 @@
         {
             this.InitializeAbsolutePadding(this.Style, x, y);
             this.ApplyConsoleStyle(this.Style);
+           
             var renderedElement = this.Render();
             this.Draw(renderedElement, x, y);
         }
@@ -50,7 +51,7 @@
         {
             ApplyStyleToConsole(style);
         }
-
+        public static int count = 0;
         protected abstract string[] Render();
 
         protected virtual void Draw(string[] renderedElement, int x, int y)
