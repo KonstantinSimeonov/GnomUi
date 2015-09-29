@@ -1,0 +1,12 @@
+.container
+color green
+left 5
+top 10
+height 3
+width 5
+
+#header
+color red
+left 3
+width 20
+height 8

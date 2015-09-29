@@ -1,0 +1,13 @@
+// format: node [leftNeighbor, rightNeighbor, upperNeighbor, lowerNeighbor]
+// exapmples
+// suppose we have buttons with Ids btn, btn2, btn3, btn4
+// every button has 4 neighbors, for each arrow key
+
+btn [, btn2, , btn4]
+btn2 [btn, btn3, , btn4]
+btn3 [btn2, , , btn4]
+btn4 [,,btn,]
+
+// defines the following:
+// btn btn2 btn3
+//     btn4
