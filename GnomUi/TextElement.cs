@@ -9,6 +9,7 @@
         private string content;
 
         public TextElement(string content)
+            :base()
         {
             this.content = content;
         }

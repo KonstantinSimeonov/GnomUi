@@ -21,6 +21,7 @@
 
         // the bool parameter is for development purposes and will probably be removed for release
         public Node(bool selected = false)
+            :base()
         {
             this.OnClick = Empty;
             this.Children = new List<IElement>();

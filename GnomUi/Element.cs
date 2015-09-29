@@ -2,6 +2,8 @@
 {
     using System;
 
+    using System.Collections;
+    using System.Collections.Generic;
     using GnomUi.Contracts;
 
     public abstract class Element : IElement
@@ -13,6 +15,13 @@
         public string Class { get; set; }
 
         public IStyle Style { get; set; }
+
+        protected Element()
+        {
+            this.Style = new Style();
+            this.Id = string.Empty;
+            this.Class = string.Empty;
+        }
 
         public INodeElement Parent
         {
@@ -30,7 +39,7 @@
                 }
                 this.parent = value;
             }
-        }        
+        }
 
         public void Display(int x, int y)
         {

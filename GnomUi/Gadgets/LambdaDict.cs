@@ -10,7 +10,7 @@
             var def = default(T);
             foreach (var pair in pairs)
             {
-                dictionary.Add(pair.Method.GetParameters()[0].ToString(), pair(def));
+                dictionary.Add(pair.Method.GetParameters()[0].Name, pair(def));
             }
 
             return dictionary;

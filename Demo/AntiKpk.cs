@@ -13,48 +13,89 @@
         static void Main()
         {
             // GnomCompositeUiDemo();
-            //var test = new IndentParser();
-            //var input = new string[] 
-            //{
-            //    "root #r .doc",
-            //    "    child1 #header .nav-bar",
-            //    "    child2 #container .full-size",
-            //    ""
-            //};
-
-            //var result = test.Parse(input);
-
-            //result.Display(0, 0);
-
-            //var dict = new Dictionary<string, int>().Init<string, int>(x => 3, y => 8, z => 10);
-
-            //foreach (var item in dict)
-            //{
-            //    Console.WriteLine(item);
-            //}
-
-            var parser = new IndentParser();
-
-            var stylesheet = @".container
-                               color green
-                               left 5
-                               top 10
-                               height 3
-                               width 5
-                               
-                               #header
-                               color red
-                               left 3
-                               width 20
-                               height 8";
-            var result = parser.ParseStylesToMap(stylesheet);
-
-            foreach (var item in result)
+            var test = new IndentParser();
+            var input = new string[] 
             {
-                Console.WriteLine(item.Key);
-                Console.WriteLine(item.Value);
+                "root #r .doc",
+                "    child1 #header .nav-bar",
+                "        :home",
+                "    child2 #container .full-size",
+                ""
+            };
+
+            
+            var style = @".doc
+                        left 3
+                        top 4
+                        color red";
+            var result = test.Parse(input, style);
+            var styleMap = test.ParseStylesToMap(style);
+
+            foreach (var item in styleMap)
+            {
+                Console.WriteLine(item);
             }
 
+            result.Styles = styleMap;
+            var i = 0;
+            foreach (var item in result)
+            {
+                if(item as TextElement != null)
+                {
+                    (item as TextElement).Display(10, 0);
+                }
+                if (styleMap.ContainsKey(item.Class))
+                {
+                    item.Style = styleMap[item.Class];
+                }
+
+                Console.WriteLine(item.Style);
+
+            }
+
+
+            // result.Root.Display(0, 0);
+
+            //            var dict = new Dictionary<string, int>().Init<string, int>(x => 3, y => 8, z => 10);
+
+            //            foreach (var item in dict)
+            //            {
+            //                Console.WriteLine(item);
+            //            }
+
+            //            var parser = new IndentParser();
+
+            //            var stylesheet = @".container
+            //                               color green
+            //                               left 5
+            //                               top 10
+            //                               height 3
+            //                               width 5
+            //                               
+            //                               #header
+            //                               color red
+            //                               left 3
+            //                               width 20
+            //                               height 8";
+            //            var res2 = parser.ParseStylesToMap(stylesheet);
+
+            //            foreach (var item in res2)
+            //            {
+            //                Console.WriteLine(item.Key);
+            //                Console.WriteLine(item.Value);
+            //            }
+
+            //            var dictionary = new Dictionary<string, int>()
+            //                .Init<string, int>(
+            //                    legsCount => 4,
+            //                    x => 3,
+            //                    mirishe => 3
+            //                );
+
+            //            foreach (var item in dictionary)
+            //            {
+            //                Console.WriteLine(item);
+            //            }
         }
 
         public static void GnomCompositeUiDemo()
@@ -129,7 +170,7 @@
             box.AddChild(btn);
             box.AddChild(div);
 
-            var btn2 = new Node(true);
+            var btn2 = new Node();
             btn2.Style = new Style()
             {
                 PaddingLeft = 10,

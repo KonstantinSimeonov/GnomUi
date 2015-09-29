@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
 
-    public interface IGnomTree
+    public interface IGnomTree : IEnumerable<IElement>
     {
         INodeElement Root { get; }
-        IDictionary<string, IStyle> Styles { get; }
+        IDictionary<string, IStyle> Styles { get; set; }
     }
 }
