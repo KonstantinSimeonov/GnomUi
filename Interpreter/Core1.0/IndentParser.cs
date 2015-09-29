@@ -32,6 +32,7 @@
             foreach (var style in fragments)
             {
                 var trimmedStyle = style.Trim();
+
                 if (!string.IsNullOrEmpty(trimmedStyle))
                 {
                     var parsedStyle = ParseStyle(style);
@@ -58,47 +59,32 @@
             return new KeyValuePair<string, IStyle>(rows[0].Trim(), result);
         }
 
-        private INodeElement ParseRecursive(string parent, string root, string[] sub, int start, int end)
+        private INodeElement ParseRecursive(string root, string[] sub, int start, int end)
         {
             var depth = root.Depth() + 1;
 
             var nextRoot = ParseToNode(root);
 
-            if (this.idMap.ContainsKey(nextRoot.Id))
-            {
-                throw new InvalidOperationException("Duplicate Ids in gnom resource at row " + (start) + ". Id name: " + nextRoot.Id);
-            }
-
-            this.idMap.Add(nextRoot.Id, nextRoot);
-
-            if (!this.classMap.ContainsKey(nextRoot.Class))
-            {
-                this.classMap[nextRoot.Class] = new List<IElement>();
-            }
-
-            this.classMap[nextRoot.Class].Add(nextRoot);
+            this.UpdateIdMap(nextRoot, start);
+            this.UpdateClassMap(nextRoot);
 
             for (int i = start + 1; i < end; i++)
             {
-                bool currentElementHasInvalidIndent = sub[i].Depth() - sub[i - 1].Depth() > 1;
-
-                if (currentElementHasInvalidIndent)
-                {
-                    throw new ArgumentException("Invalid gnome composition at row " + (i + 1) + ". Node " + sub[i].Trim() + " has invalid tree depth.");
-                }
+                ThrowIfInvalidIndenting(sub, i);
 
                 bool currentElementIsChildOfRoot = i == sub.Length - 1 || sub[i].Depth() <= depth;
 
                 if (currentElementIsChildOfRoot)
                 {
                     var trimmed = sub[i - 1].Trim();
+
                     if (i < sub.Length - 1 && trimmed[0] == ':')
                     {
                         nextRoot.AddChild(new TextElement(trimmed.Remove(0, 1)));
                     }
                     else
                     {
-                        nextRoot.AddChild(ParseRecursive(root, sub[start], sub, start + 1, i + 1));
+                        nextRoot.AddChild(ParseRecursive(sub[start], sub, start + 1, i + 1));
                     }
 
                     start = i;
@@ -106,6 +92,36 @@
             }
 
             return nextRoot;
+        }
+ 
+        private void UpdateClassMap(INodeElement nextRoot)
+        {
+            if (!this.classMap.ContainsKey(nextRoot.Class))
+            {
+                this.classMap[nextRoot.Class] = new List<IElement>();
+            }
+
+            this.classMap[nextRoot.Class].Add(nextRoot);
+        }
+ 
+        private void UpdateIdMap(INodeElement nextRoot, int start)
+        {
+            if (this.idMap.ContainsKey(nextRoot.Id))
+            {
+                throw new InvalidOperationException("Duplicate Ids in gnom resource at row " + (start) + ". Id name: " + nextRoot.Id);
+            }
+
+            this.idMap.Add(nextRoot.Id, nextRoot);
+        }
+ 
+        private void ThrowIfInvalidIndenting(string[] sub, int i)
+        {
+            bool currentElementHasInvalidIndent = sub[i].Depth() - sub[i - 1].Depth() > 1;
+
+            if (currentElementHasInvalidIndent)
+            {
+                throw new ArgumentException("Invalid gnome composition at row " + (i + 1) + ". Node " + sub[i].Trim() + " has invalid tree depth.");
+            }
         }
 
         private static INodeElement ParseToNode(string node)
@@ -146,7 +162,7 @@
         {
             this.ClearMaps();
 
-            var root = ParseRecursive(string.Empty, args[0], args, 1, args.Length);
+            var root = ParseRecursive(args[0], args, 1, args.Length);
             var styles = this.ParseStylesToMap(stylesheet);
             var tree = new GnomTree(root, this.idMap, this.classMap, styles);
 

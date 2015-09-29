@@ -37,13 +37,8 @@
             }
 
             result.Styles = styleMap;
-            var i = 0;
             foreach (var item in result)
             {
-                if(item as TextElement != null)
-                {
-                    (item as TextElement).Display(10, 0);
-                }
                 if (styleMap.ContainsKey(item.Class))
                 {
                     item.Style = styleMap[item.Class];
