@@ -49,6 +49,14 @@
             return this.GetEnumerator();
         }
 
+        public IElement this[string id]
+        {
+            get
+            {
+                return this.idMap[id];
+            }
+        }
+
         public IEnumerator<IElement> GetEnumerator()
         {
             var nodes = new Stack<IElement>();

@@ -6,5 +6,7 @@
     {
         INodeElement Root { get; }
         IDictionary<string, IStyle> Styles { get; set; }
+
+        IElement this[string id] { get; }
     }
 }
