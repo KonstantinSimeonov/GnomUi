@@ -2,12 +2,22 @@
 {
     using System;
 
-    using System.Collections;
     using System.Collections.Generic;
     using GnomUi.Contracts;
 
-    public abstract class Element : IElement
+    public abstract class Element : IElement, IPressable
     {
+         private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
+            {
+                { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
+                { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
+                { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
+                { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
+            };
+        
+        // i don't like null ref exceptions
+        protected static readonly Action<IElement> Empty = (element) => { };
+
         private INodeElement parent;
 
         public string Id { get; set; }
@@ -16,12 +26,44 @@
 
         public IStyle Style { get; set; }
 
-        protected Element()
+        protected Element(bool selected = false)
         {
             this.Style = new Style();
             this.Id = string.Empty;
             this.Class = string.Empty;
+            this.Neighbors = new Dictionary<ConsoleKey, ISelectable>();
+            this.IsSelected = selected;
         }
+
+        // INodeElement properties
+
+        
+
+        // IPressable properties
+        // ISelectable methods
+
+        public void LinkTo(ConsoleKey key, ISelectable element, bool doubly = true)
+        {
+            this.Neighbors.Add(key, element);
+
+            if (!element.Neighbors.ContainsKey(reverseKeys[key]) && doubly)
+            {
+                element.Neighbors.Add(reverseKeys[key], this);
+            }
+        }
+
+        // IPressable methods
+
+        public void FireEvent()
+        {
+            this.OnClick(this);
+        }
+
+        public Action<IElement> OnClick { get; set; }
+
+        public bool IsSelected { get; set; }
+
+        public IDictionary<ConsoleKey, ISelectable> Neighbors { get; private set; }
 
         public INodeElement Parent
         {

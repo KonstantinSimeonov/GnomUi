@@ -7,39 +7,14 @@
 
     public class Node : Element, INodeElement
     {
-        
-        private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
-            {
-                { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
-                { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
-                { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
-                { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
-            };
-        
-        // i don't like null ref exceptions
-        protected static readonly Action<IElement> Empty = (element) => { };
-
-        // the bool parameter is for development purposes and will probably be removed for release
+        public IList<IElement> Children { get; set; }
+       
         public Node(bool selected = false)
             :base()
         {
             this.OnClick = Empty;
             this.Children = new List<IElement>();
-            this.Neighbors = new Dictionary<ConsoleKey, ISelectable>();
-            this.IsSelected = selected;
         }
-
-        // INodeElement properties
-
-        public IList<IElement> Children { get; set; }
-
-        // IPressable properties
-
-        public Action<IElement> OnClick { get; set; }
-
-        public bool IsSelected { get; set; }
-
-        public IDictionary<ConsoleKey, ISelectable> Neighbors { get; private set; }
 
         // INodeElement methods
 
@@ -55,24 +30,7 @@
             return this;
         }
 
-        // ISelectable methods
-
-        public void LinkTo(ConsoleKey key, ISelectable element, bool doubly = true)
-        {
-            this.Neighbors.Add(key, element);
-
-            if (!element.Neighbors.ContainsKey(reverseKeys[key]) && doubly)
-            {
-                element.Neighbors.Add(reverseKeys[key], this);
-            }
-        }
-
-        // IPressable methods
-
-        public void FireEvent()
-        {
-            this.OnClick(this);
-        }
+        
 
         // inherited and private methods
 

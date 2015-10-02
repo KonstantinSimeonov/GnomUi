@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public interface INodeElement : IElement, IPressable
+    public interface INodeElement : IElement
     {
         IList<IElement> Children { get; }
         INodeElement AddChild(IElement element);
