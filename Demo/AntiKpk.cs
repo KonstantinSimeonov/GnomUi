@@ -13,22 +13,24 @@
         static void Main()
         {
             // GnomCompositeUiDemo();
-            var test = new IndentParser();
-//            var input = new string[] 
-//            {
-//                "root #r .doc",
-//                "    child1 #header .nav-bar",
-//                "        :home",
-//                "    child2 #container .full-size",
-//                ""
-//            };
+            var test = new GnomInterpreter();
+            var input = new string[] 
+            {
+                "root #r .doc",
+                "    child1 #header .nav-bar",
+                "        :home",
+                "    child2 #container .full-size",
+                ""
+            };
 
             
-//            var style = @".doc
-//                        left 3
-//                        top 4
-//                        color red";
-//            var result = test.Parse(input, style);
+            var style = @".doc
+                        left 3
+                        top 4
+                        color red";
+            var result = test.Parse(input, style, @"btn btn2 # # btn3
+btn2 # # btn btn3
+btn3 # btn4 btn5 btn6");
 //            var styleMap = test.ParseStylesToMap(style);
 
 //            foreach (var item in styleMap)

@@ -42,7 +42,7 @@
     <Compile Include="Contracts\IGnomInterpreter.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Gadgets\StringExtensions.cs" />
-    <Compile Include="Core1.0\IndentParser.cs" />
+    <Compile Include="Core1.0\GnomInterpreter.cs" />
     <Compile Include="Gadgets\FluentSwitch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

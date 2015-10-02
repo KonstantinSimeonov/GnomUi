@@ -9,28 +9,35 @@
 
     using Interpreter.Gadgets;
 
-    public class IndentParser
+    public class GnomInterpreter
     {
+        private const int NodeLinksCount = 4;
+        private const StringSplitOptions NoOptions = StringSplitOptions.None;
+        private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
+
         private IDictionary<string, IStyle> styleMap;
         private IDictionary<string, IElement> idMap;
         private IDictionary<string, IList<IElement>> classMap;
+        private IDictionary<string, IList<string>> selectionGraph;
 
-
-        public IndentParser()
+        public GnomInterpreter()
         {
             this.idMap = new Dictionary<string, IElement>();
             this.classMap = new Dictionary<string, IList<IElement>>();
             this.styleMap = new Dictionary<string, IStyle>();
+            this.selectionGraph = new Dictionary<string, IList<string>>();
         }
 
-        public IGnomTree Parse(string[] args, string stylesheet)
+        public IGnomTree Parse(string[] args, string stylesheet, string selectionMap)
         {
             this.ClearMaps();
 
             var root = ParseRecursive(args[0], args, 1, args.Length);
             var styles = ParseStylesToMap(stylesheet);
-            var tree = new GnomTree(root, this.idMap, this.classMap, styles);
+            this.selectionGraph = ParseGnomSelectionMap(selectionMap);
 
+            var tree = new GnomTree(root, this.idMap, this.classMap, styles);
+            ApplySelectionMapToTree(tree, this.selectionGraph);
             ApplyStyleMapToTree(tree, styles);
 
             return tree;
@@ -40,11 +47,41 @@
         {
             this.idMap.Clear();
             this.classMap.Clear();
+            this.styleMap.Clear();
+            this.selectionGraph.Clear();
+        }
+
+        private static IDictionary<string, IList<string>> ParseGnomSelectionMap(string selectionMap)
+        {
+            var selectionMapRows = selectionMap.Split(new string[] { Environment.NewLine }, NoOptions);
+            var result = new Dictionary<string, IList<string>>();
+
+            foreach (var nodeMapping in selectionMapRows)
+            {
+                var nodesAsStringArray = nodeMapping.Split(new char[] { ' ' }, RemoveEmpty)
+                                                    .Select(x => x.ToLower())
+                                                    .ToArray();
+
+                var nodeId = nodesAsStringArray[0];
+
+                if (!result.ContainsKey(nodeId))
+                {
+                    result.Add(nodeId, new List<string>(NodeLinksCount));
+                }
+
+                for (int i = 1; i <= NodeLinksCount; i++)
+                {
+                    var nodeToAdd = nodesAsStringArray[i] == "#" ? nodeId : nodesAsStringArray[i];
+                    result[nodeId].Add(nodeToAdd);
+                }
+            }
+
+            return result;
         }
 
         private static IDictionary<string, IStyle> ParseStylesToMap(string stylesheet)
         {
-            var fragments = stylesheet.Split(new char[] { '.', '#' }, StringSplitOptions.RemoveEmptyEntries);
+            var fragments = stylesheet.Split(new char[] { '.', '#' }, RemoveEmpty);
 
             var result = new Dictionary<string, IStyle>();
 
@@ -64,13 +101,13 @@
 
         private static KeyValuePair<string, IStyle> ParseStyle(string style)
         {
-            var rows = style.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+            var rows = style.Split(new string[] { Environment.NewLine }, NoOptions).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
             var result = new Style();
 
             for (var i = 1; i < rows.Length; i++)
             {
-                var splitRow = rows[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                var splitRow = rows[i].Split(new char[] { ' ' }, RemoveEmpty);
 
                 result[splitRow[0]] = splitRow[1];
             }
@@ -145,7 +182,7 @@
 
         private static INodeElement ParseToNode(string node)
         {
-            var split = node.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+            var split = node.Split(new char[] { ' ' }, RemoveEmpty)
                             .Where(x => x[0] == '#' || x[0] == '.') // remove all other entries
                             .GroupBy(x => x[0]) // divide id and classes attaching
                             .OrderBy(x => x.Key == '#' ? -1 : 1) // ids come first
@@ -185,6 +222,14 @@
                 {
                     node.Style = map[node.Class];
                 }
+            }
+        }
+
+        private static void ApplySelectionMapToTree(IGnomTree tree, IDictionary<string, IList<string>> seletionMap)
+        {
+            foreach (var nodeLinkInfo in seletionMap)
+            {
+                Console.WriteLine(nodeLinkInfo.Key +" "+ string.Join(", ", nodeLinkInfo.Value));
             }
         }
 
