@@ -1,4 +1,4 @@
-﻿namespace Interpreter.Core1._0
+﻿namespace Interpreter.Core
 {
     using System;
     using System.Collections.Generic;

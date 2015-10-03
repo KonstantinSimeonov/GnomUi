@@ -15,7 +15,7 @@
         //private const StringSplitOptions NoOptions = StringSplitOptions.None;
         private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
 
-        private static readonly ConsoleKey[] directionKeysMap = new ConsoleKey[] { ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
+        
         //private IDictionary<string, IStyle> styleMap;
         private IDictionary<string, IElement> idMap;
         private IDictionary<string, IList<IElement>> classMap;
@@ -29,9 +29,11 @@
             //this.selectionGraph = new Dictionary<string, IList<string>>();
         }
 
-        public IGnomTree Parse(string[] args, string stylesheet, string selectionMap)
+        public IGnomTree Parse(string treeDescription)
         {
             this.ClearMaps();
+
+            var args = treeDescription.Split(new string[] { Environment.NewLine }, RemoveEmpty).Concat(new string[] { "" }).ToArray();
 
             var root = ParseRecursive(args[0], args, 1, args.Length);
             //var styles = ParseStylesToMap(stylesheet);
@@ -210,34 +212,7 @@
             return parsedNode;
         }
 
-        private static void ApplyStyleMapToTree(IGnomTree tree, IDictionary<string, IStyle> map)
-        {
-            foreach (var node in tree)
-            {
-                if (map.ContainsKey(node.Class))
-                {
-                    node.Style = map[node.Class];
-                }
-            }
-        }
-
-        private static void ApplySelectionMapToTree(IGnomTree tree, IDictionary<string, IList<string>> seletionMap)
-        {
-            var directionIndex = 0;
-
-            foreach (var nodeLinkInfo in seletionMap)
-            {                
-                for (int i = 0; i < 4; i++)
-                {
-                    var key = directionKeysMap[i];
-                    var neighborForKey = tree[nodeLinkInfo.Value[i]];
-                    tree[nodeLinkInfo.Key].Neighbors.Add(key, neighborForKey);
-                    
-                }
-            }
-
-            directionIndex++;
-        }
+        
 
     }
 }

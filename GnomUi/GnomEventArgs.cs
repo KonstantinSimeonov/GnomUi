@@ -1,12 +1,8 @@
-﻿using GnomUi.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GnomUi
+﻿namespace GnomUi
 {
+    using GnomUi.Contracts;
+    using System;
+
     public class GnomEventArgs
     {
         public ConsoleKeyInfo PressedKeyInfo { get; private set; }

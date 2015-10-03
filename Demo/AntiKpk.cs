@@ -7,6 +7,7 @@
     using GnomUi.Contracts;
 
     using Interpreter.Core;
+    using Interpreter;
 
     class AntiKpk
     {
@@ -17,8 +18,7 @@
             var uiDescription = @"root #r .r
     box #container .div
         button #btn1 .1 :btn1
-        button #btn2 .2 :btn2
-";
+        button #btn2 .2 :btn2";
             var styles = @".div
 width 15
 height 14
@@ -45,17 +45,9 @@ color red";
             var graph = @"btn1 # btn2 # #
 btn2 btn1 # # #";
 
-
-            var parser = new GnomInterpreter();
-
-            var result = parser.Parse(uiDescription.Split(new string[] { Environment.NewLine }, StringSplitOptions.None), styles, graph);
-            result["btn1"].IsSelected = true;
-            IPressable selected = result["btn1"];
-
-            var app = new GnomApp(result, selected, e =>
-            {
-                e.Target.OnClick = (x) => { Console.WriteLine("wazaaa"); };
-            });
+            var gnomBuilder = ParserProvider.GetGnomConstructor();
+            var result = gnomBuilder.Construct(uiDescription, graph, styles);
+            result.Root.Display(0, 0);
         }
 
 

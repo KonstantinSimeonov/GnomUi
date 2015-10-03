@@ -39,13 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IGnomConstructor.cs" />
     <Compile Include="Contracts\IGnomInterpreter.cs" />
-    <Compile Include="Core.cs" />
-    <Compile Include="Core1.0\SelectionGraphParser.cs" />
-    <Compile Include="Core1.0\GnomStyleParser.cs" />
+    <Compile Include="Core\SelectionGraphParser.cs" />
+    <Compile Include="Core\GnomStyleParser.cs" />
     <Compile Include="Gadgets\StringExtensions.cs" />
-    <Compile Include="Core1.0\GnomInterpreter.cs" />
+    <Compile Include="Core\GnomInterpreter.cs" />
     <Compile Include="Gadgets\FluentSwitch.cs" />
+    <Compile Include="GnomConstructor.cs" />
+    <Compile Include="ParserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
