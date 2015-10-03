@@ -10,7 +10,7 @@
         public IList<IElement> Children { get; set; }
        
         public Node(bool selected = false)
-            :base()
+            :base(selected)
         {
             this.OnClick = Empty;
             this.Children = new List<IElement>();
@@ -101,10 +101,7 @@
         protected override void ApplyConsoleStyle(IStyle style)
         {
             base.ApplyConsoleStyle(style);
-            if(this.IsSelected)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-            }
+            
         }
     }
 }

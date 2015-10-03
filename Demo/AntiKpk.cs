@@ -12,88 +12,52 @@
     {
         static void Main()
         {
+            Console.CursorVisible = false;
             // GnomCompositeUiDemo();
-            var test = new GnomInterpreter();
-            var input = new string[] 
+            var uiDescription = @"root #r .r
+    box #container .div
+        button #btn1 .1 :btn1
+        button #btn2 .2 :btn2
+";
+            var styles = @".div
+width 15
+height 14
+color blue
+
+.r
+width 40
+height 20
+color green
+
+.1
+left 5
+top 8
+height 3
+width 6
+color blue
+
+.2
+left 2
+top 2
+height 3
+width 9
+color red";
+            var graph = @"btn1 # btn2 # #
+btn2 btn1 # # #";
+
+
+            var parser = new GnomInterpreter();
+
+            var result = parser.Parse(uiDescription.Split(new string[] { Environment.NewLine }, StringSplitOptions.None), styles, graph);
+            result["btn1"].IsSelected = true;
+            IPressable selected = result["btn1"];
+
+            var app = new GnomApp(result, selected, e =>
             {
-                "root #r .doc",
-                "    child1 #header .nav-bar",
-                "        :home",
-                "    child2 #container .full-size",
-                ""
-            };
-
-            
-            var style = @".doc
-                        left 3
-                        top 4
-                        color red";
-            var result = test.Parse(input, style, @"btn btn2 # # btn3
-btn2 # # btn btn3
-btn3 # btn4 btn5 btn6");
-//            var styleMap = test.ParseStylesToMap(style);
-
-//            foreach (var item in styleMap)
-//            {
-//                Console.WriteLine(item);
-//            }
-
-//            result.Styles = styleMap;
-//            foreach (var item in result)
-//            {
-//                if (styleMap.ContainsKey(item.Class))
-//                {
-//                    item.Style = styleMap[item.Class];
-//                }
-
-//                Console.WriteLine(item.Style);
-
-//            }
-
-
-            // result.Root.Display(0, 0);
-
-            //            var dict = new Dictionary<string, int>().Init<string, int>(x => 3, y => 8, z => 10);
-
-            //            foreach (var item in dict)
-            //            {
-            //                Console.WriteLine(item);
-            //            }
-
-            //            var parser = new IndentParser();
-
-            //            var stylesheet = @".container
-            //                               color green
-            //                               left 5
-            //                               top 10
-            //                               height 3
-            //                               width 5
-            //                               
-            //                               #header
-            //                               color red
-            //                               left 3
-            //                               width 20
-            //                               height 8";
-            //            var res2 = parser.ParseStylesToMap(stylesheet);
-
-            //            foreach (var item in res2)
-            //            {
-            //                Console.WriteLine(item.Key);
-            //                Console.WriteLine(item.Value);
-            //            }
-
-            //            var dictionary = new Dictionary<string, int>()
-            //                .Init<string, int>(
-            //                    legsCount => 4,
-            //                    x => 3,
-            //                    mirishe => 3
-            //                );
-
-            //            foreach (var item in dictionary)
-            //            {
-            //                Console.WriteLine(item);
-            //            }
+                e.Target.OnClick = (x) => { Console.WriteLine("wazaaa"); };
+            });
         }
+
 
         public static void GnomCompositeUiDemo()
         {

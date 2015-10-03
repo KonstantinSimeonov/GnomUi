@@ -6,6 +6,6 @@
 
     public interface IGnomeGraphElement
     {
-        IDictionary<ConsoleKey, ISelectable> Neighbors { get; }
+        
     }
 }

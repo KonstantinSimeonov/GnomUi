@@ -15,6 +15,7 @@
         private const StringSplitOptions NoOptions = StringSplitOptions.None;
         private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
 
+        private static readonly ConsoleKey[] directionKeysMap = new ConsoleKey[] { ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
         private IDictionary<string, IStyle> styleMap;
         private IDictionary<string, IElement> idMap;
         private IDictionary<string, IList<IElement>> classMap;
@@ -133,16 +134,7 @@
                 if (currentElementIsChildOfRoot)
                 {
                     var trimmed = sub[i - 1].Trim();
-
-                    if (i < sub.Length - 1 && trimmed[0] == ':')
-                    {
-                        nextRoot.AddChild(new TextElement(trimmed.Remove(0, 1)));
-                    }
-                    else
-                    {
-                        nextRoot.AddChild(ParseRecursive(sub[start], sub, start + 1, i + 1));
-                    }
-
+                    nextRoot.AddChild(ParseRecursive(sub[start], sub, start + 1, i + 1));
                     start = i;
                 }
             }
@@ -183,9 +175,9 @@
         private static INodeElement ParseToNode(string node)
         {
             var split = node.Split(new char[] { ' ' }, RemoveEmpty)
-                            .Where(x => x[0] == '#' || x[0] == '.') // remove all other entries
+                            .Where(x => x[0] == '#' || x[0] == '.' || x[0] == ':') // remove all other entries
                             .GroupBy(x => x[0]) // divide id and classes attaching
-                            .OrderBy(x => x.Key == '#' ? -1 : 1) // ids come first
+                            .OrderBy(x => x.Key) // ids come first
                             .Select(x => x.ToArray()) // remove dupes and cast to array
                             .ToArray();
 
@@ -209,7 +201,11 @@
                 .Case(split.Length > 1, () =>
                     {
                         parsedNode.Class = split[1][0].Remove(0, 1);
-                    });
+                    })
+                .Case(split.Length > 2, () =>
+                {
+                    parsedNode.AddChild(new TextElement(split[2][0].Remove(0, 1)));
+                });
 
             return parsedNode;
         }
@@ -227,10 +223,20 @@
 
         private static void ApplySelectionMapToTree(IGnomTree tree, IDictionary<string, IList<string>> seletionMap)
         {
+            var directionIndex = 0;
+
             foreach (var nodeLinkInfo in seletionMap)
-            {
-                Console.WriteLine(nodeLinkInfo.Key +" "+ string.Join(", ", nodeLinkInfo.Value));
+            {                
+                for (int i = 0; i < 4; i++)
+                {
+                    var key = directionKeysMap[i];
+                    var neighborForKey = tree[nodeLinkInfo.Value[i]];
+                    tree[nodeLinkInfo.Key].Neighbors.Add(key, neighborForKey);
+                    
+                }
             }
+
+            directionIndex++;
         }
 
     }

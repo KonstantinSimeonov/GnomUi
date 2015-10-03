@@ -7,14 +7,14 @@
 
     public abstract class Element : IElement, IPressable
     {
-         private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
+        private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
             {
                 { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
                 { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
                 { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
                 { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
             };
-        
+
         // i don't like null ref exceptions
         protected static readonly Action<IElement> Empty = (element) => { };
 
@@ -31,18 +31,18 @@
             this.Style = new Style();
             this.Id = string.Empty;
             this.Class = string.Empty;
-            this.Neighbors = new Dictionary<ConsoleKey, ISelectable>();
+            this.Neighbors = new Dictionary<ConsoleKey, IPressable>();
             this.IsSelected = selected;
         }
 
         // INodeElement properties
 
-        
+
 
         // IPressable properties
         // ISelectable methods
 
-        public void LinkTo(ConsoleKey key, ISelectable element, bool doubly = true)
+        public void LinkTo(ConsoleKey key, IPressable element, bool doubly = true)
         {
             this.Neighbors.Add(key, element);
 
@@ -63,7 +63,7 @@
 
         public bool IsSelected { get; set; }
 
-        public IDictionary<ConsoleKey, ISelectable> Neighbors { get; private set; }
+        public IDictionary<ConsoleKey, IPressable> Neighbors { get; private set; }
 
         public INodeElement Parent
         {
@@ -75,7 +75,7 @@
             private set
             {
                 // a validation : O
-                if(value != null && this.parent != null)
+                if (value != null && this.parent != null)
                 {
                     throw new InvalidOperationException("gnom doesnt allow changing the parent of an element that already has a parent");
                 }
@@ -87,9 +87,14 @@
         {
             this.InitializeAbsolutePadding(this.Style, x, y);
             this.ApplyConsoleStyle(this.Style);
-           
+
             var renderedElement = this.Render();
+            if (this.IsSelected)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+            }
             this.Draw(renderedElement, x, y);
+            Console.SetCursorPosition(50, 0);
         }
 
         protected virtual void InitializeAbsolutePadding(IStyle style, int x, int y)
@@ -118,6 +123,7 @@
 
         protected static void ApplyStyleToConsole(IStyle style)
         {
+
             Console.ForegroundColor = style.Color;
             Console.SetCursorPosition(style.AbsPaddingLeft, style.AbsPaddingTop);
         }
