@@ -12,22 +12,15 @@
 
     public class GnomInterpreter : IGnomInterpreter
     {
-        //private const int NodeLinksCount = 4;
-        //private const StringSplitOptions NoOptions = StringSplitOptions.None;
         private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
 
-        
-        //private IDictionary<string, IStyle> styleMap;
         private IDictionary<string, IElement> idMap;
         private IDictionary<string, IList<IElement>> classMap;
-        //private IDictionary<string, IList<string>> selectionGraph;
 
         internal GnomInterpreter()
         {
             this.idMap = new Dictionary<string, IElement>();
             this.classMap = new Dictionary<string, IList<IElement>>();
-            //this.styleMap = new Dictionary<string, IStyle>();
-            //this.selectionGraph = new Dictionary<string, IList<string>>();
         }
 
         public IGnomTree Parse(string treeDescription)
@@ -37,12 +30,8 @@
             var args = treeDescription.Split(new string[] { Environment.NewLine }, RemoveEmpty).Concat(new string[] { "" }).ToArray();
 
             var root = ParseRecursive(args[0], args, 1, args.Length);
-            //var styles = ParseStylesToMap(stylesheet);
-            //this.selectionGraph = ParseGnomSelectionMap(selectionMap);
 
             var tree = new GnomTree(root, this.idMap, this.classMap);
-            //ApplySelectionMapToTree(tree, this.selectionGraph);
-            //ApplyStyleMapToTree(tree, styles);
 
             return tree;
         }
@@ -51,73 +40,7 @@
         {
             this.idMap.Clear();
             this.classMap.Clear();
-            //this.styleMap.Clear();
-            //this.selectionGraph.Clear();
         }
-
-        //private static IDictionary<string, IList<string>> ParseGnomSelectionMap(string selectionMap)
-        //{
-        //    var selectionMapRows = selectionMap.Split(new string[] { Environment.NewLine }, NoOptions);
-        //    var result = new Dictionary<string, IList<string>>();
-
-        //    foreach (var nodeMapping in selectionMapRows)
-        //    {
-        //        var nodesAsStringArray = nodeMapping.Split(new char[] { ' ' }, RemoveEmpty)
-        //                                            .Select(x => x.ToLower())
-        //                                            .ToArray();
-
-        //        var nodeId = nodesAsStringArray[0];
-
-        //        if (!result.ContainsKey(nodeId))
-        //        {
-        //            result.Add(nodeId, new List<string>(NodeLinksCount));
-        //        }
-
-        //        for (int i = 1; i <= NodeLinksCount; i++)
-        //        {
-        //            var nodeToAdd = nodesAsStringArray[i] == "#" ? nodeId : nodesAsStringArray[i];
-        //            result[nodeId].Add(nodeToAdd);
-        //        }
-        //    }
-
-        //    return result;
-        //}
-
-        //private static IDictionary<string, IStyle> ParseStylesToMap(string stylesheet)
-        //{
-        //    var fragments = stylesheet.Split(new char[] { '.', '#' }, RemoveEmpty);
-
-        //    var result = new Dictionary<string, IStyle>();
-
-        //    foreach (var style in fragments)
-        //    {
-        //        var trimmedStyle = style.Trim();
-
-        //        if (!string.IsNullOrEmpty(trimmedStyle))
-        //        {
-        //            var parsedStyle = ParseStyle(style);
-        //            result.Add(parsedStyle.Key, parsedStyle.Value);
-        //        }
-        //    }
-
-        //    return result;
-        //}
-
-        //private static KeyValuePair<string, IStyle> ParseStyle(string style)
-        //{
-        //    var rows = style.Split(new string[] { Environment.NewLine }, NoOptions).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-
-        //    var result = new Style();
-
-        //    for (var i = 1; i < rows.Length; i++)
-        //    {
-        //        var splitRow = rows[i].Split(new char[] { ' ' }, RemoveEmpty);
-
-        //        result[splitRow[0]] = splitRow[1];
-        //    }
-
-        //    return new KeyValuePair<string, IStyle>(rows[0].Trim(), result);
-        //}
 
         private INodeElement ParseRecursive(string root, string[] sub, int start, int end)
         {
@@ -212,8 +135,5 @@
 
             return parsedNode;
         }
-
-        
-
     }
 }

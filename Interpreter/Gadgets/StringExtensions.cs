@@ -1,6 +1,6 @@
 ﻿namespace Interpreter
 {
-    internal static class ImAnnoyed
+    internal static class StringExtensions
     {
         public static string Format(this string format, params object[] stuff)
         {
