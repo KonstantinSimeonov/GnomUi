@@ -5,7 +5,6 @@
     public interface IGnomTree : IEnumerable<IElement>
     {
         INodeElement Root { get; }
-        IDictionary<string, IStyle> Styles { get; set; }
 
         IElement this[string id] { get; }
     }

@@ -34,12 +34,12 @@
             this.ClearMaps();
 
             var root = ParseRecursive(args[0], args, 1, args.Length);
-            var styles = ParseStylesToMap(stylesheet);
+            //var styles = ParseStylesToMap(stylesheet);
             this.selectionGraph = ParseGnomSelectionMap(selectionMap);
 
-            var tree = new GnomTree(root, this.idMap, this.classMap, styles);
+            var tree = new GnomTree(root, this.idMap, this.classMap);
             ApplySelectionMapToTree(tree, this.selectionGraph);
-            ApplyStyleMapToTree(tree, styles);
+            //ApplyStyleMapToTree(tree, styles);
 
             return tree;
         }
@@ -80,41 +80,41 @@
             return result;
         }
 
-        private static IDictionary<string, IStyle> ParseStylesToMap(string stylesheet)
-        {
-            var fragments = stylesheet.Split(new char[] { '.', '#' }, RemoveEmpty);
+        //private static IDictionary<string, IStyle> ParseStylesToMap(string stylesheet)
+        //{
+        //    var fragments = stylesheet.Split(new char[] { '.', '#' }, RemoveEmpty);
 
-            var result = new Dictionary<string, IStyle>();
+        //    var result = new Dictionary<string, IStyle>();
 
-            foreach (var style in fragments)
-            {
-                var trimmedStyle = style.Trim();
+        //    foreach (var style in fragments)
+        //    {
+        //        var trimmedStyle = style.Trim();
 
-                if (!string.IsNullOrEmpty(trimmedStyle))
-                {
-                    var parsedStyle = ParseStyle(style);
-                    result.Add(parsedStyle.Key, parsedStyle.Value);
-                }
-            }
+        //        if (!string.IsNullOrEmpty(trimmedStyle))
+        //        {
+        //            var parsedStyle = ParseStyle(style);
+        //            result.Add(parsedStyle.Key, parsedStyle.Value);
+        //        }
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        private static KeyValuePair<string, IStyle> ParseStyle(string style)
-        {
-            var rows = style.Split(new string[] { Environment.NewLine }, NoOptions).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+        //private static KeyValuePair<string, IStyle> ParseStyle(string style)
+        //{
+        //    var rows = style.Split(new string[] { Environment.NewLine }, NoOptions).Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 
-            var result = new Style();
+        //    var result = new Style();
 
-            for (var i = 1; i < rows.Length; i++)
-            {
-                var splitRow = rows[i].Split(new char[] { ' ' }, RemoveEmpty);
+        //    for (var i = 1; i < rows.Length; i++)
+        //    {
+        //        var splitRow = rows[i].Split(new char[] { ' ' }, RemoveEmpty);
 
-                result[splitRow[0]] = splitRow[1];
-            }
+        //        result[splitRow[0]] = splitRow[1];
+        //    }
 
-            return new KeyValuePair<string, IStyle>(rows[0].Trim(), result);
-        }
+        //    return new KeyValuePair<string, IStyle>(rows[0].Trim(), result);
+        //}
 
         private INodeElement ParseRecursive(string root, string[] sub, int start, int end)
         {
