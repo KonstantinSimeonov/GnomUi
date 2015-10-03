@@ -15,9 +15,6 @@
                 { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
             };
 
-        // i don't like null ref exceptions
-        protected static readonly Action<IElement> Empty = (element) => { };
-
         private INodeElement parent;
 
         public string Id { get; set; }
@@ -35,13 +32,6 @@
             this.IsSelected = selected;
         }
 
-        // INodeElement properties
-
-
-
-        // IPressable properties
-        // ISelectable methods
-
         public void LinkTo(ConsoleKey key, IPressable element, bool doubly = true)
         {
             this.Neighbors.Add(key, element);
@@ -51,8 +41,6 @@
                 element.Neighbors.Add(reverseKeys[key], this);
             }
         }
-
-        // IPressable methods
 
         public void FireEvent()
         {
@@ -79,6 +67,7 @@
                 {
                     throw new InvalidOperationException("gnom doesnt allow changing the parent of an element that already has a parent");
                 }
+
                 this.parent = value;
             }
         }
@@ -123,7 +112,6 @@
 
         protected static void ApplyStyleToConsole(IStyle style)
         {
-
             Console.ForegroundColor = style.Color;
             Console.SetCursorPosition(style.AbsPaddingLeft, style.AbsPaddingTop);
         }

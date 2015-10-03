@@ -12,11 +12,9 @@
         public Node(bool selected = false)
             :base(selected)
         {
-            this.OnClick = Empty;
+            this.OnClick = x => { };
             this.Children = new List<IElement>();
         }
-
-        // INodeElement methods
 
         public INodeElement AddChild(IElement element)
         {
@@ -30,54 +28,12 @@
             return this;
         }
 
-        
-
-        // inherited and private methods
-
-        // INTERESTING: the template method pattern is strong with this one
-        //public override void Display(int x, int y)
-        //{
-        //    //// calculate padding
-        //    //this.Style.AbsPaddingLeft = this.Style.PaddingLeft + x;
-        //    //this.Style.AbsPaddingTop = this.Style.PaddingTop + y;
-
-        //    //// apply styles
-        //    //ApplyStyleToConsole(this.Style);
-        //    //if (this.IsSelected)
-        //    //{
-        //    //    Console.ForegroundColor = ConsoleColor.White;
-        //    //}
-
-        //    //// draw
-        //    //var counter = this.Style.AbsPaddingTop;
-
-        //    //foreach (var line in this.Render())
-        //    //{
-        //    //    Console.SetCursorPosition(this.Style.AbsPaddingLeft, counter++);
-        //    //    Console.WriteLine(line);
-        //    //}
-
-        //    //// display children
-        //    //foreach (var child in this.Children)
-        //    //{
-        //    //    child.Display(this.Style.AbsPaddingLeft + 1, this.Style.AbsPaddingTop + 1);
-        //    //}
-        //    this.InitializeAbsolutePadding(this.Style, x, y);
-
-        //    this.ApplyConsoleStyle(this.Style);
-
-        //    var renderedElement = this.Render();
-
-        //    this.Draw(renderedElement, x, y);
-        //}
-
         protected override void Draw(string[] renderedElement, int x, int y)
         {
             base.Draw(renderedElement, x, y);
             
             foreach (var child in this.Children)
             {
-                
                 child.Display(this.Style.AbsPaddingLeft + 1, this.Style.AbsPaddingTop + 1);
             }
         }
@@ -101,7 +57,6 @@
         protected override void ApplyConsoleStyle(IStyle style)
         {
             base.ApplyConsoleStyle(style);
-            
         }
     }
 }

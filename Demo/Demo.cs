@@ -6,10 +6,9 @@
     using GnomUi;
     using GnomUi.Contracts;
 
-    using Interpreter.Core;
     using Interpreter;
 
-    class AntiKpk
+    class Demo
     {
         static void Main()
         {
