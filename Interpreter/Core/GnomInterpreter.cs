@@ -7,9 +7,10 @@
     using GnomUi.Contracts;
     using GnomUi;
 
+    using Interpreter.Contracts;
     using Interpreter.Gadgets;
 
-    public class GnomInterpreter
+    public class GnomInterpreter : IGnomInterpreter
     {
         //private const int NodeLinksCount = 4;
         //private const StringSplitOptions NoOptions = StringSplitOptions.None;
@@ -21,7 +22,7 @@
         private IDictionary<string, IList<IElement>> classMap;
         //private IDictionary<string, IList<string>> selectionGraph;
 
-        public GnomInterpreter()
+        internal GnomInterpreter()
         {
             this.idMap = new Dictionary<string, IElement>();
             this.classMap = new Dictionary<string, IList<IElement>>();

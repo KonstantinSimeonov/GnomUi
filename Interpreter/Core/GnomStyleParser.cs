@@ -7,7 +7,9 @@
     using GnomUi;
     using GnomUi.Contracts;
 
-    internal class GnomStyleParser
+    using Interpreter.Contracts;
+
+    internal class GnomStyleParser : IGnomStyleParser
     {
         private const StringSplitOptions NoOptions = StringSplitOptions.None;
         private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;

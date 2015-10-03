@@ -2,8 +2,8 @@
 {
     using GnomUi.Contracts;
 
-    public interface IGnomInterpreter
+    internal interface IGnomInterpreter
     {
-        INodeElement ParseToGnomTree(string gnomDsl);
+        IGnomTree Parse(string gnomDsl);
     }
 }

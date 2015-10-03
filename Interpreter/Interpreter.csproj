@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Contracts\IGnomConstructor.cs" />
     <Compile Include="Contracts\IGnomInterpreter.cs" />
+    <Compile Include="Contracts\IGnomSelectionParser.cs" />
+    <Compile Include="Contracts\IGnomStyleParser.cs" />
     <Compile Include="Core\SelectionGraphParser.cs" />
     <Compile Include="Core\GnomStyleParser.cs" />
     <Compile Include="Gadgets\StringExtensions.cs" />

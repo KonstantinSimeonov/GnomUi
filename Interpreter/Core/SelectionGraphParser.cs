@@ -4,13 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    internal class SelectionGraphParser
+    using Interpreter.Contracts;
+
+    internal class SelectionGraphParser : IGnomSelectionParser
     {
         private const int NodeLinksCount = 4;
         private const StringSplitOptions NoOptions = StringSplitOptions.None;
         private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
 
-        public SelectionGraphParser()
+        internal SelectionGraphParser()
         {
         }
 
