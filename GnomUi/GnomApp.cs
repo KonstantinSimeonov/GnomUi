@@ -10,7 +10,7 @@
         {
             IPressable selected = startingElement;
 
-            view.Root.Display(0, 0);
+            //view.Root.Display(0, 0);
 
             while (true)
             {
@@ -32,7 +32,7 @@
                     appMethod(args);
                 }
 
-                view.Root.Display(0, 0);
+                //view.Root.Display(0, 0);
             }
         }
 

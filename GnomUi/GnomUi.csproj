@@ -39,10 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleManipulator.cs" />
+    <Compile Include="Contracts\IComponentRenderer.cs" />
     <Compile Include="Contracts\IGnomApp.cs" />
     <Compile Include="Contracts\IGnomeGraphElement.cs" />
     <Compile Include="Contracts\IGnomTree.cs" />
     <Compile Include="Contracts\ISelectable.cs" />
+    <Compile Include="Contracts\ITextElement.cs" />
+    <Compile Include="Drawers\ConsoleDrawer.cs" />
     <Compile Include="TreeComponents\Element.cs" />
     <Compile Include="Contracts\IElement.cs" />
     <Compile Include="Contracts\INodeElement.cs" />

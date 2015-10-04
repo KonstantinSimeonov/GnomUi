@@ -73,32 +73,32 @@
             }
         }
 
-        public void Display(int x, int y)
-        {
-            this.InitializeAbsolutePadding(this.Style, x, y);
-            this.ApplyConsoleStyle(this.Style);
+        //public void Display(int x, int y)
+        //{
+        //    this.InitializeAbsolutePadding(this.Style, x, y);
+        //    this.ApplyConsoleStyle(this.Style);
 
-            var renderedElement = this.Render();
-            if (this.IsSelected)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-            this.Draw(renderedElement, x, y);
-            Console.SetCursorPosition(50, 0);
-        }
+        //    var renderedElement = this.ToStringArray();
+        //    if (this.IsSelected)
+        //    {
+        //        Console.ForegroundColor = ConsoleColor.White;
+        //    }
+        //    this.Draw(renderedElement, x, y);
+        //    Console.SetCursorPosition(50, 0);
+        //}
 
-        protected virtual void InitializeAbsolutePadding(IStyle style, int x, int y)
-        {
-            style.AbsPaddingLeft = style.PaddingLeft + x;
-            style.AbsPaddingTop = style.PaddingTop + y;
-        }
+        //public virtual void InitializeAbsolutePadding(IStyle style, int x, int y)
+        //{
+        //    style.AbsPaddingLeft = style.PaddingLeft + x;
+        //    style.AbsPaddingTop = style.PaddingTop + y;
+        //}
 
-        protected virtual void ApplyConsoleStyle(IStyle style)
-        {
-            ApplyStyleToConsole(style);
-        }
+        //public virtual void ApplyConsoleStyle(IStyle style)
+        //{
+        //    ApplyStyleToConsole(style);
+        //}
 
-        protected virtual string[] Render()
+        public virtual string[] ToStringArray()
         {
             var topBottomBorder = ' ' + new string('_', this.Style.Width - 2);
             var result = new string[this.Style.Height];
@@ -114,27 +114,27 @@
             return result;
         }
 
-        protected virtual void Draw(string[] renderedElement, int x, int y)
-        {
-            var counter = this.Style.AbsPaddingTop;
+        //protected virtual void Draw(string[] renderedElement, int x, int y)
+        //{
+        //    var counter = this.Style.AbsPaddingTop;
 
-            foreach (var line in renderedElement)
-            {
-                Console.SetCursorPosition(this.Style.AbsPaddingLeft, counter++);
-                Console.WriteLine(line);
-            }
+        //    foreach (var line in renderedElement)
+        //    {
+        //        Console.SetCursorPosition(this.Style.AbsPaddingLeft, counter++);
+        //        Console.WriteLine(line);
+        //    }
 
-            foreach (var child in this.Children)
-            {
-                child.Display(this.Style.AbsPaddingLeft + 1, this.Style.AbsPaddingTop + 1);
-            }
-        }
+        //    foreach (var child in this.Children)
+        //    {
+        //        //child.Display(this.Style.AbsPaddingLeft + 1, this.Style.AbsPaddingTop + 1);
+        //    }
+        //}
 
-        protected static void ApplyStyleToConsole(IStyle style)
-        {
-            Console.ForegroundColor = style.Color;
-            Console.SetCursorPosition(style.AbsPaddingLeft, style.AbsPaddingTop);
-        }
+        //protected static void ApplyStyleToConsole(IStyle style)
+        //{
+        //    Console.ForegroundColor = style.Color;
+        //    Console.SetCursorPosition(style.AbsPaddingLeft, style.AbsPaddingTop);
+        //}
 
         public IList<INodeElement> Children { get; private set; }
 

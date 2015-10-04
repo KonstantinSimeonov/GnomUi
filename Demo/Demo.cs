@@ -8,6 +8,7 @@
 
     using Interpreter;
     using GnomUi.TreeComponents;
+    using GnomUi.Drawers;
 
     class Demo
     {
@@ -47,7 +48,8 @@ btn2 btn1 # # #";
 
             var gnomBuilder = ParserProvider.GetGnomConstructor();
             var result = gnomBuilder.Construct(uiDescription, graph, styles);
-            result.Root.Display(0, 0);
+            var drawer = new ConsoleManipulator();
+            drawer.DrawGnomTree(result);
         }
 
 
@@ -146,7 +148,7 @@ btn2 btn1 # # #";
 
             box.AddChild(btn2);
 
-            box.Display(0, 0);
+            //box.Display(0, 0);
 
             Console.SetCursorPosition(0, 20);
 
@@ -189,7 +191,7 @@ btn2 btn1 # # #";
                 }
 
                 Console.Clear();
-                box.Display(0, 0);
+                //box.Display(0, 0);
             }
         }
     }

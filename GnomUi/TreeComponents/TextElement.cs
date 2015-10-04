@@ -4,25 +4,26 @@
 
     using GnomUi.Contracts;
 
-    public class TextElement : Element
+    public class TextElement : Element, ITextElement
     {
-        private string content;
 
         public TextElement(string content)
             :base(false)
         {
-            this.content = content;
+            this.Content = content;
         }
 
-        protected override string[] Render()
+        public string Content { get; set; }
+
+        public override string[] ToStringArray()
         {
-            return new string[] { this.content };
+            return new string[] { this.Content };
         }
 
-        protected override void InitializeAbsolutePadding(IStyle style, int x, int y)
-        {
-            base.InitializeAbsolutePadding(style, x, y);
-            style.AbsPaddingTop--;
-        }
+        //protected  void InitializeAbsolutePadding(IStyle style, int x, int y)
+        //{
+        //    base.InitializeAbsolutePadding(style, x, y);
+        //    style.AbsPaddingTop--;
+        //}
     }
 }

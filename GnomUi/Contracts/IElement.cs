@@ -9,6 +9,6 @@
         IStyle Style { get; set; }
         INodeElement Parent { get; }
 
-        void Display(int x, int y);
+        string[] ToStringArray();
     }
 }
