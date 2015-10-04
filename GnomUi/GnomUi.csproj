@@ -40,9 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleManipulator.cs" />
-    <Compile Include="Contracts\IComponentRenderer.cs" />
+    <Compile Include="Contracts\IConsoleManipulator.cs" />
     <Compile Include="Contracts\IGnomApp.cs" />
-    <Compile Include="Contracts\IGnomeGraphElement.cs" />
     <Compile Include="Contracts\IGnomTree.cs" />
     <Compile Include="Contracts\ISelectable.cs" />
     <Compile Include="Contracts\ITextElement.cs" />

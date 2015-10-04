@@ -1,9 +1,10 @@
-﻿using GnomUi.Contracts;
-namespace GnomUi
+﻿namespace GnomUi
 {
     using System;
 
-    public class ConsoleManipulator
+    using GnomUi.Contracts;
+
+    public class ConsoleManipulator : IConsoleManipulator
     {
         public void DrawGnomTree(IGnomTree tree, int topStart = 0, int leftStart = 0)
         {
