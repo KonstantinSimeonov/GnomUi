@@ -6,9 +6,8 @@
 
     public class TextElement : Element, ITextElement
     {
-
         public TextElement(string content)
-            :base(false)
+            : base(false)
         {
             this.Content = content;
         }
@@ -19,11 +18,5 @@
         {
             return new string[] { this.Content };
         }
-
-        //protected  void InitializeAbsolutePadding(IStyle style, int x, int y)
-        //{
-        //    base.InitializeAbsolutePadding(style, x, y);
-        //    style.AbsPaddingTop--;
-        //}
     }
 }

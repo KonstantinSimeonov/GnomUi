@@ -73,30 +73,6 @@
             }
         }
 
-        //public void Display(int x, int y)
-        //{
-        //    this.InitializeAbsolutePadding(this.Style, x, y);
-        //    this.ApplyConsoleStyle(this.Style);
-
-        //    var renderedElement = this.ToStringArray();
-        //    if (this.IsSelected)
-        //    {
-        //        Console.ForegroundColor = ConsoleColor.White;
-        //    }
-        //    this.Draw(renderedElement, x, y);
-        //    Console.SetCursorPosition(50, 0);
-        //}
-
-        //public virtual void InitializeAbsolutePadding(IStyle style, int x, int y)
-        //{
-        //    style.AbsPaddingLeft = style.PaddingLeft + x;
-        //    style.AbsPaddingTop = style.PaddingTop + y;
-        //}
-
-        //public virtual void ApplyConsoleStyle(IStyle style)
-        //{
-        //    ApplyStyleToConsole(style);
-        //}
 
         public virtual string[] ToStringArray()
         {
@@ -113,28 +89,6 @@
 
             return result;
         }
-
-        //protected virtual void Draw(string[] renderedElement, int x, int y)
-        //{
-        //    var counter = this.Style.AbsPaddingTop;
-
-        //    foreach (var line in renderedElement)
-        //    {
-        //        Console.SetCursorPosition(this.Style.AbsPaddingLeft, counter++);
-        //        Console.WriteLine(line);
-        //    }
-
-        //    foreach (var child in this.Children)
-        //    {
-        //        //child.Display(this.Style.AbsPaddingLeft + 1, this.Style.AbsPaddingTop + 1);
-        //    }
-        //}
-
-        //protected static void ApplyStyleToConsole(IStyle style)
-        //{
-        //    Console.ForegroundColor = style.Color;
-        //    Console.SetCursorPosition(style.AbsPaddingLeft, style.AbsPaddingTop);
-        //}
 
         public IList<INodeElement> Children { get; private set; }
 

@@ -1,17 +1,13 @@
 ﻿using GnomUi.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace GnomUi
 {
+    using System;
+
     public class ConsoleManipulator
     {
-        public void DrawGnomTree(IGnomTree tree)
+        public void DrawGnomTree(IGnomTree tree, int topStart = 0, int leftStart = 0)
         {
-            DrawTreeRec(tree.Root, 0, 0);
+            DrawTreeRec(tree.Root, topStart, leftStart);
         }
 
         private static void DrawTreeRec(INodeElement node, int x, int y)
