@@ -1,4 +1,4 @@
-﻿namespace GnomUi
+﻿namespace GnomUi.EventModel
 {
     using GnomUi.Contracts;
     using System;

@@ -8,7 +8,7 @@
 
     using Interpreter;
     using GnomUi.TreeComponents;
-    using GnomUi.Drawers;
+    using GnomUi.Drawing;
 
     class Demo
     {

@@ -1,4 +1,4 @@
-﻿namespace GnomUi
+﻿namespace GnomUi.Drawing
 {
     using System;
 
