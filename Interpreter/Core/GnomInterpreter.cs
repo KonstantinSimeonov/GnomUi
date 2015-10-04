@@ -9,18 +9,19 @@
 
     using Interpreter.Contracts;
     using Interpreter.Gadgets;
+    using GnomUi.TreeComponents;
 
     public class GnomInterpreter : IGnomInterpreter
     {
         private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
 
-        private IDictionary<string, IElement> idMap;
-        private IDictionary<string, IList<IElement>> classMap;
+        private IDictionary<string, INodeElement> idMap;
+        private IDictionary<string, IList<INodeElement>> classMap;
 
         internal GnomInterpreter()
         {
-            this.idMap = new Dictionary<string, IElement>();
-            this.classMap = new Dictionary<string, IList<IElement>>();
+            this.idMap = new Dictionary<string, INodeElement>();
+            this.classMap = new Dictionary<string, IList<INodeElement>>();
         }
 
         public IGnomTree Parse(string treeDescription)
@@ -68,17 +69,17 @@
             return nextRoot;
         }
 
-        private static void UpdateClassMap(INodeElement nextRoot, IDictionary<string, IList<IElement>> classMap)
+        private static void UpdateClassMap(INodeElement nextRoot, IDictionary<string, IList<INodeElement>> classMap)
         {
             if (!classMap.ContainsKey(nextRoot.Class))
             {
-                classMap[nextRoot.Class] = new List<IElement>();
+                classMap[nextRoot.Class] = new List<INodeElement>();
             }
 
             classMap[nextRoot.Class].Add(nextRoot);
         }
 
-        private static void UpdateIdMap(INodeElement nextRoot, int row, IDictionary<string, IElement> idMap)
+        private static void UpdateIdMap(INodeElement nextRoot, int row, IDictionary<string, INodeElement> idMap)
         {
             if (idMap.ContainsKey(nextRoot.Id))
             {
@@ -107,7 +108,7 @@
                             .Select(x => x.ToArray()) // remove dupes and cast to array
                             .ToArray();
 
-            var parsedNode = new Node();
+            var parsedNode = new Element(false);
 
             var handler = new Switch<string[][]>(split, true);
 

@@ -7,8 +7,8 @@
 
     public class GnomTree : IGnomTree, IEnumerable<IElement>
     {
-        private readonly IDictionary<string, IElement> idMap;
-        private readonly IDictionary<string, IList<IElement>> classMap;
+        private readonly IDictionary<string, INodeElement> idMap;
+        private readonly IDictionary<string, IList<INodeElement>> classMap;
 
         public INodeElement Root { get; private set; }
 
@@ -17,7 +17,7 @@
             this.Root = root;
         }
 
-        public GnomTree(INodeElement root, IDictionary<string, IElement> idMap, IDictionary<string, IList<IElement>> classMap)
+        public GnomTree(INodeElement root, IDictionary<string, INodeElement> idMap, IDictionary<string, IList<INodeElement>> classMap)
             : this(root)
         {
             this.classMap = classMap;
@@ -26,12 +26,10 @@
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-
-
             return this.GetEnumerator();
         }
 
-        public IElement this[string id]
+        public INodeElement this[string id]
         {
             get
             {

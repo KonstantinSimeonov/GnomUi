@@ -7,6 +7,7 @@
     using GnomUi.Contracts;
 
     using Interpreter;
+    using GnomUi.TreeComponents;
 
     class Demo
     {
@@ -64,7 +65,7 @@ btn2 btn1 # # #";
 
             // sample elements
 
-            var box = new Node();
+            var box = new Element(false);
             box.Style = new Style()
             {
                 PaddingLeft = 1,
@@ -74,7 +75,7 @@ btn2 btn1 # # #";
                 Height = 15
             };
 
-            var btn = new Node();
+            var btn = new Element(false);
             btn.Style = new Style()
             {
                 PaddingLeft = 1,
@@ -96,7 +97,7 @@ btn2 btn1 # # #";
                 //Height = 1
             };
 
-            var div = new Node();
+            var div = new Element(false);
             div.Style = new Style()
             {
                 PaddingLeft = 15,
@@ -122,7 +123,7 @@ btn2 btn1 # # #";
             box.AddChild(btn);
             box.AddChild(div);
 
-            var btn2 = new Node();
+            var btn2 = new Element(false);
             btn2.Style = new Style()
             {
                 PaddingLeft = 10,

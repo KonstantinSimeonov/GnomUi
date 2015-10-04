@@ -43,7 +43,7 @@
     <Compile Include="Contracts\IGnomeGraphElement.cs" />
     <Compile Include="Contracts\IGnomTree.cs" />
     <Compile Include="Contracts\ISelectable.cs" />
-    <Compile Include="Element.cs" />
+    <Compile Include="TreeComponents\Element.cs" />
     <Compile Include="Contracts\IElement.cs" />
     <Compile Include="Contracts\INodeElement.cs" />
     <Compile Include="Contracts\IPressable.cs" />
@@ -52,10 +52,9 @@
     <Compile Include="GnomEventArgs.cs" />
     <Compile Include="GnomTree.cs" />
     <Compile Include="Gadgets\LambdaDict.cs" />
-    <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Style.cs" />
-    <Compile Include="TextElement.cs" />
+    <Compile Include="TreeComponents\Style.cs" />
+    <Compile Include="TreeComponents\TextElement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

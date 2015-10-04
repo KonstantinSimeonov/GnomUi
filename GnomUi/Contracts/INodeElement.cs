@@ -4,8 +4,8 @@
 
     public interface INodeElement : IElement
     {
-        IList<IElement> Children { get; }
-        INodeElement AddChild(IElement element);
-        INodeElement RemoveElement(IElement element);
+        IList<INodeElement> Children { get; }
+        INodeElement AddChild(INodeElement element);
+        INodeElement RemoveElement(INodeElement element);
     }
 }

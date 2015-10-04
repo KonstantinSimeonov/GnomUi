@@ -1,4 +1,4 @@
-﻿namespace GnomUi
+﻿namespace GnomUi.TreeComponents
 {
     using System;
 
@@ -9,7 +9,7 @@
         private string content;
 
         public TextElement(string content)
-            :base()
+            :base(false)
         {
             this.content = content;
         }

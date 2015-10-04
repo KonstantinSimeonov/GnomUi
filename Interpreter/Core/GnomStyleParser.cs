@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using GnomUi;
     using GnomUi.Contracts;
 
     using Interpreter.Contracts;
+    using GnomUi.TreeComponents;
 
     internal class GnomStyleParser : IGnomStyleParser
     {
