@@ -37,9 +37,16 @@
         {
             this.Neighbors.Add(key, element);
 
-            if (!element.Neighbors.ContainsKey(reverseKeys[key]) && doubly)
+            if (!element.Neighbors.ContainsKey(reverseKeys[key]) || doubly)
             {
-                element.Neighbors.Add(reverseKeys[key], this);
+                if(!element.Neighbors.ContainsKey(reverseKeys[key]))
+                {
+                    element.Neighbors.Add(reverseKeys[key], this);
+                }
+                else
+                {
+                    element.Neighbors[reverseKeys[key]] = this;
+                }
             }
         }
 

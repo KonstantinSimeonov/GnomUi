@@ -81,54 +81,54 @@ top exit # # #";
             var result = gnomBuilder.Construct(uiDescription, graph, styles);
             var drawer = new ConsoleManipulator();
             var matrix = new string[,]{
-                {"1 ", " 2 ", " 3"},
-                {"4 ", " 5", " 6"}
+                {"1", "2", "3"},
+                {"4", "5", "6"}
             };
-            ;
-
-            var app = new GnomApp(result, AddMatrixToGnom(result["field"], matrix), x => { });
+            var startingSelection = AddMatrixToGnom(result["field"], matrix);
+            startingSelection.LinkTo(ConsoleKey.DownArrow, result["restart"], true);
+            var app = new GnomApp(result, startingSelection, drawer, x => { });
             app.Start();
             //drawer.DrawGnomTree(result);
         }
 
         public static IPressable AddMatrixToGnom(INodeElement field, string[,] matrix)
         {
-            var result = new TextElement[matrix.GetLength(0),matrix.GetLength(1)];
+            var result = new TextElement[matrix.GetLength(0), matrix.GetLength(1)];
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    result[i,j] = new TextElement(matrix[i, j])
+                    result[i, j] = new TextElement(matrix[i, j])
                     {
                         Style = new Style()
                         {
-                            PaddingLeft = j* 2,
-                            PaddingTop = i*2,
+                            PaddingLeft = j * 2,
+                            PaddingTop = i * 2,
                             Color = ConsoleColor.Green
                         }
                     };
 
-                    if(i > 0)
+                    if (i > 0)
                     {
                         result[i, j].LinkTo(ConsoleKey.UpArrow, result[i - 1, j]);
                     }
 
-                    if(j > 0)
+                    if (j > 0)
                     {
                         result[i, j].LinkTo(ConsoleKey.LeftArrow, result[i, j - 1]);
                     }
-                    
+
                 }
             }
 
-            result[0, 0].IsSelected = true;
+            result[result.GetLength(0) - 1, 0].IsSelected = true;
 
             foreach (var node in result)
             {
                 field.AddChild(node);
             }
 
-            return result[0, 0];
+            return result[result.GetLength(0) - 1, 0];
         }
 
         public static bool IsInsideMatrix<T>(T[,] matrix, int row, int col)
