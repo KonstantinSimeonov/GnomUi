@@ -10,7 +10,7 @@
         private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
             {
                 { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
-                { ConsoleKey.LeftArrow, ConsoleKey.DownArrow },
+                { ConsoleKey.LeftArrow, ConsoleKey.RightArrow },
                 { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
                 { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
             };

@@ -16,42 +16,140 @@
         {
             Console.CursorVisible = false;
             // GnomCompositeUiDemo();
-            var uiDescription = @"root #r .r
+            var uiDescription = @"root #root .root-element
     box #container .div
-        button #btn1 .1 :btn1
-        button #btn2 .2 :btn2";
+        field #field .field
+        button #restart .btn1 :restart
+        button #undo .btn2 :undo
+        button #exit .btn3 :exit
+        button #top .btn4 :top";
             var styles = @".div
-width 15
-height 14
-color blue
-
-.r
-width 40
+width 50
 height 20
-color green
-
-.1
-left 5
-top 8
-height 3
-width 6
 color blue
 
-.2
+.root-element
+color black
+width 2
+height 2
 left 2
 top 2
-height 3
-width 9
-color red";
-            var graph = @"btn1 # btn2 # #
-btn2 btn1 # # #";
+
+.field
+width 28
+height 11
+color red
+
+.root
+width 50
+height 30
+color green
+
+.btn1
+left 4
+top 12
+height 4
+width 10
+color blue
+
+.btn2
+left 16
+top 12
+height 4
+width 8
+color blue
+
+.btn3
+left 26
+top 12
+height 4
+width 8
+color blue
+
+.btn4
+left 36
+top 12
+height 4
+width 8
+color blue";
+            var graph = @"restart # undo # #
+undo restart exit # #
+exit undo top # #
+top exit # # #";
 
             var gnomBuilder = ParserProvider.GetGnomConstructor();
             var result = gnomBuilder.Construct(uiDescription, graph, styles);
             var drawer = new ConsoleManipulator();
-            drawer.DrawGnomTree(result);
+            var matrix = new string[,]{
+                {"1 ", " 2 ", " 3"},
+                {"4 ", " 5", " 6"}
+            };
+            ;
+
+            var app = new GnomApp(result, AddMatrixToGnom(result["field"], matrix), x => { });
+            app.Start();
+            //drawer.DrawGnomTree(result);
         }
 
+        public static IPressable AddMatrixToGnom(INodeElement field, string[,] matrix)
+        {
+            var result = new TextElement[matrix.GetLength(0),matrix.GetLength(1)];
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    result[i,j] = new TextElement(matrix[i, j])
+                    {
+                        Style = new Style()
+                        {
+                            PaddingLeft = j* 2,
+                            PaddingTop = i*2,
+                            Color = ConsoleColor.Green
+                        }
+                    };
+
+                    if(i > 0)
+                    {
+                        result[i, j].LinkTo(ConsoleKey.UpArrow, result[i - 1, j]);
+                    }
+
+                    if(j > 0)
+                    {
+                        result[i, j].LinkTo(ConsoleKey.LeftArrow, result[i, j - 1]);
+                    }
+                    
+                }
+            }
+
+            result[0, 0].IsSelected = true;
+
+            foreach (var node in result)
+            {
+                field.AddChild(node);
+            }
+
+            return result[0, 0];
+        }
+
+        public static bool IsInsideMatrix<T>(T[,] matrix, int row, int col)
+        {
+            var rowIsInRange = IsInRange(0, matrix.GetLength(0), row);
+            var colIsInRange = IsInRange(0, matrix.GetLength(1), col);
+
+            return rowIsInRange && colIsInRange;
+        }
+
+        /// <summary>
+        /// Returns true if an integer falls within a valid range.
+        /// </summary>
+        /// <param name="start">Start of the range(inclusive).</param>
+        /// <param name="end">End of the range(not inclusive).</param>
+        /// <param name="value">The value which is tested against the range.</param>
+        /// <returns></returns>
+        private static bool IsInRange(int start, int end, int value)
+        {
+            return start <= value && value < end;
+        }
 
         public static void GnomCompositeUiDemo()
         {

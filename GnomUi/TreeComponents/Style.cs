@@ -26,6 +26,7 @@
             { "white", ConsoleColor.White },
             { "yellow", ConsoleColor.Yellow },
             { "magenta", ConsoleColor.Magenta },
+            {"black", ConsoleColor.Black}
         };
 
         // default style for all elements
