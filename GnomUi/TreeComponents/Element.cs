@@ -8,12 +8,12 @@
     public class Element : INodeElement, IPressable
     {
         private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
-            {
-                { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
-                { ConsoleKey.LeftArrow, ConsoleKey.RightArrow },
-                { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
-                { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
-            };
+        {
+            { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
+            { ConsoleKey.LeftArrow, ConsoleKey.RightArrow },
+            { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
+            { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
+        };
 
         private INodeElement parent;
 
@@ -85,12 +85,14 @@
             }
         }
 
+        // ISSUE: AddChild doesn't add the element's id to the GnomTree id map
         public INodeElement AddChild(INodeElement element)
         {
             this.Children.Add(element);
             return this;
         }
 
+        // ISSUE: RemoveElement doesn't remove the element's id from the GnomTree id map
         public INodeElement RemoveElement(INodeElement element)
         {
             if (this.Children.Contains(element))

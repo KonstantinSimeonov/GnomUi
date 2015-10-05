@@ -10,7 +10,13 @@
 
     internal class GnomConstructor : IGnomConstructor
     {
-        private static readonly ConsoleKey[] directionKeysMap = new ConsoleKey[] { ConsoleKey.LeftArrow, ConsoleKey.RightArrow, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
+        private static readonly ConsoleKey[] directionKeysMap = new ConsoleKey[]
+        { 
+            ConsoleKey.LeftArrow, 
+            ConsoleKey.RightArrow,
+            ConsoleKey.UpArrow, 
+            ConsoleKey.DownArrow 
+        };
 
         private readonly GnomInterpreter structureParser;
 
@@ -25,7 +31,7 @@
             this.structureParser = structureParser;
         }
 
-        public IGnomTree Construct(string treeDescription, string selectionGraph = "", string stylesheet = "")
+        public IGnomTree Construct(string treeDescription, string selectionGraph, string stylesheet)
         {
             var result = this.structureParser.Parse(treeDescription);
 

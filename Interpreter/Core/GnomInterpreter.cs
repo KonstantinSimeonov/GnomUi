@@ -13,9 +13,16 @@
 
     public class GnomInterpreter : IGnomInterpreter
     {
+        private const char Id = '#';
+        private const char Class = '.';
+        private const char Text = ':';
+
         private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
 
+        private static readonly char[] attributeCharacters = new char[] { Id, Class, Text };
+        
         private IDictionary<string, INodeElement> idMap;
+
         private IDictionary<string, IList<INodeElement>> classMap;
 
         internal GnomInterpreter()
@@ -28,7 +35,7 @@
         {
             this.ClearMaps();
 
-            var args = treeDescription.Split(new string[] { Environment.NewLine }, RemoveEmpty).Concat(new string[] { "" }).ToArray();
+            var args = treeDescription.SplitBy(Environment.NewLine).Concat(new string[] { "" }).ToArray();
 
             var root = ParseRecursive(args[0], args, 1, args.Length);
 
@@ -84,7 +91,7 @@
         {
             if (idMap.ContainsKey(nextRoot.Id))
             {
-                throw new InvalidOperationException("Duplicate Ids in gnom resource at row " + (row) + ". Id name: " + nextRoot.Id);
+                throw new InvalidOperationException("Duplicate Ids in gnom resource at row {0}. Id name: {1}".Format(row + 1,  nextRoot.Id));
             }
 
             idMap.Add(nextRoot.Id, nextRoot);
@@ -96,44 +103,32 @@
 
             if (currentElementHasInvalidIndent)
             {
-                throw new ArgumentException("Invalid gnome composition at row " + (row + 1) + ". Node " + current.Trim() + " has invalid tree depth.");
+                throw new ArgumentException("Invalid gnome composition at row {0}. Node {1} has invalid tree depth.".Format(row + 1, current.Trim()));
             }
         }
 
         private static INodeElement ParseToNode(string node)
         {
-            var attributeGroups = node.Split(new char[] { ' ' }, RemoveEmpty)
-                            .Where(x => x[0] == '#' || x[0] == '.' || x[0] == ':') // remove all other entries
+            var attributeGroups = node.SplitBy(" ")
+                            .Where(x => attributeCharacters.Contains(x[0])) // remove all other entries
                             .GroupBy(x => x[0]) // divide id and classes attaching
-                            .OrderBy(x => x.Key) // ids come first
-                            .Select(x => x.ToArray()) // remove dupes and cast to array
-                            .ToArray();
+                            .ToDictionary(group => group.Key, group => group.Select(x => x.RemoveFirst()).ToArray());
 
-            var parsedNode = new Element(false);
+            var parsedNode = new Element();
 
-            var handler = new Switch<string[][]>(attributeGroups, true);
+            // falthrough switch base on dictionary
+            new Switch<IDictionary<char, string[]>>(attributeGroups, true)
+                    .Case(attributeGroups.ContainsKey(Id), () =>
+                        {
+                            if (attributeGroups[Id].Length > 1)
+                            {
+                                throw new InvalidOperationException("Cannot specify two Ids for element " + node);
+                            }
 
-            handler
-                .Case(attributeGroups.Length == 0, () =>
-                    {
-                        handler.FallThrough = false;
-                    })
-                .Case(attributeGroups[0].Length > 1, () =>
-                    {
-                        throw new InvalidOperationException("Cannot specify two Ids for element " + node);
-                    })
-                .Case(attributeGroups[0].Length == 1, () =>
-                    {
-                        parsedNode.Id = attributeGroups[0][0].Remove(0, 1);
-                    })
-                .Case(attributeGroups.Length > 1, () =>
-                    {
-                        parsedNode.Class = attributeGroups[1][0].Remove(0, 1);
-                    })
-                .Case(attributeGroups.Length > 2, () =>
-                {
-                    parsedNode.AddChild(new TextElement(attributeGroups[2][0].Remove(0, 1)));
-                });
+                            parsedNode.Id = attributeGroups[Id][0];
+                        })
+                    .Case(attributeGroups.ContainsKey(Class), () => parsedNode.Class = attributeGroups[Class][0])
+                    .Case(attributeGroups.ContainsKey(Text), () => parsedNode.AddChild(new TextElement(attributeGroups[Text][0])));
 
             return parsedNode;
         }
