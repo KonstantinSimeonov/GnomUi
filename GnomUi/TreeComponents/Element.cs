@@ -23,13 +23,13 @@
 
         public IStyle Style { get; set; }
 
-        public Element(bool selected)
+        public Element(bool selected = false, string id = "", string className = "")
         {
             this.Style = new Style();
-            this.Id = string.Empty;
-            this.Class = string.Empty;
-            this.Neighbors = new Dictionary<ConsoleKey, IPressable>();
+            this.Id = id;
+            this.Class = className;
             this.IsSelected = selected;
+            this.Neighbors = new Dictionary<ConsoleKey, IPressable>();
             this.Children = new List<INodeElement>();
         }
 
@@ -39,7 +39,7 @@
 
             if (!element.Neighbors.ContainsKey(reverseKeys[key]) || doubly)
             {
-                if(!element.Neighbors.ContainsKey(reverseKeys[key]))
+                if (!element.Neighbors.ContainsKey(reverseKeys[key]))
                 {
                     element.Neighbors.Add(reverseKeys[key], this);
                 }
@@ -50,17 +50,22 @@
             }
         }
 
+        // TODO: should create new GnomEventArgs and pass then to OnClick
         public void FireEvent()
         {
             this.OnClick(this);
         }
 
+        // TODO: OnClick event should be Action<GnomEventArgs>
         public Action<IElement> OnClick { get; set; }
 
         public bool IsSelected { get; set; }
 
         public IDictionary<ConsoleKey, IPressable> Neighbors { get; private set; }
 
+        public IList<INodeElement> Children { get; private set; }
+
+        // TODO: implement setting in parser
         public INodeElement Parent
         {
             get
@@ -80,25 +85,6 @@
             }
         }
 
-
-        public virtual string[] ToStringArray()
-        {
-            var topBottomBorder = ' ' + new string('_', this.Style.Width - 2);
-            var result = new string[this.Style.Height];
-            result[0] = (topBottomBorder);
-
-            for (int i = 1; i < this.Style.Height - 1; i++)
-            {
-                result[i] = ('|' + new string(' ', this.Style.Width - 2) + '|');
-            }
-
-            result[result.Length - 1] = ('|' + new string('_', this.Style.Width - 2) + '|');
-
-            return result;
-        }
-
-        public IList<INodeElement> Children { get; private set; }
-
         public INodeElement AddChild(INodeElement element)
         {
             this.Children.Add(element);
@@ -113,6 +99,23 @@
             }
 
             return this;
+        }
+
+        // TODO: terri-ugly code, needs some shining
+        public virtual string[] ToStringArray()
+        {
+            var topBottomBorder = ' ' + new string('_', this.Style.Width - 2);
+            var result = new string[this.Style.Height];
+            result[0] = (topBottomBorder);
+
+            for (int i = 1; i < this.Style.Height - 1; i++)
+            {
+                result[i] = ('|' + new string(' ', this.Style.Width - 2) + '|');
+            }
+
+            result[result.Length - 1] = ('|' + new string('_', this.Style.Width - 2) + '|');
+
+            return result;
         }
     }
 }

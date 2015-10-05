@@ -6,6 +6,6 @@
     {
         INodeElement Root { get; }
 
-        INodeElement this[string id] { get; }
+        INodeElement this[string id] { get; set; }
     }
 }

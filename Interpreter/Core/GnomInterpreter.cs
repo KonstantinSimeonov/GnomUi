@@ -43,6 +43,7 @@
             this.classMap.Clear();
         }
 
+        // TODO: Implement iterative parsing and scrap this one
         private INodeElement ParseRecursive(string root, string[] sub, int start, int end)
         {
             var depth = root.Depth() + 1;
@@ -101,7 +102,7 @@
 
         private static INodeElement ParseToNode(string node)
         {
-            var split = node.Split(new char[] { ' ' }, RemoveEmpty)
+            var attributeGroups = node.Split(new char[] { ' ' }, RemoveEmpty)
                             .Where(x => x[0] == '#' || x[0] == '.' || x[0] == ':') // remove all other entries
                             .GroupBy(x => x[0]) // divide id and classes attaching
                             .OrderBy(x => x.Key) // ids come first
@@ -110,28 +111,28 @@
 
             var parsedNode = new Element(false);
 
-            var handler = new Switch<string[][]>(split, true);
+            var handler = new Switch<string[][]>(attributeGroups, true);
 
             handler
-                .Case(split.Length == 0, () =>
+                .Case(attributeGroups.Length == 0, () =>
                     {
                         handler.FallThrough = false;
                     })
-                .Case(split[0].Length > 1, () =>
+                .Case(attributeGroups[0].Length > 1, () =>
                     {
                         throw new InvalidOperationException("Cannot specify two Ids for element " + node);
                     })
-                .Case(split[0].Length == 1, () =>
+                .Case(attributeGroups[0].Length == 1, () =>
                     {
-                        parsedNode.Id = split[0][0].Remove(0, 1);
+                        parsedNode.Id = attributeGroups[0][0].Remove(0, 1);
                     })
-                .Case(split.Length > 1, () =>
+                .Case(attributeGroups.Length > 1, () =>
                     {
-                        parsedNode.Class = split[1][0].Remove(0, 1);
+                        parsedNode.Class = attributeGroups[1][0].Remove(0, 1);
                     })
-                .Case(split.Length > 2, () =>
+                .Case(attributeGroups.Length > 2, () =>
                 {
-                    parsedNode.AddChild(new TextElement(split[2][0].Remove(0, 1)));
+                    parsedNode.AddChild(new TextElement(attributeGroups[2][0].Remove(0, 1)));
                 });
 
             return parsedNode;

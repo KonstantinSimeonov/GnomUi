@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace GnomUi.Contracts
+﻿namespace GnomUi.Contracts
 {
     public interface ITextElement
     {

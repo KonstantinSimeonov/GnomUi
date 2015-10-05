@@ -1,7 +1,5 @@
 ﻿namespace GnomUi.Contracts
 {
-    using System.Collections.Generic;
-
     public interface IElement : IPressable
     {
         string Id { get; set; }

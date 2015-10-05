@@ -26,15 +26,8 @@
             { "white", ConsoleColor.White },
             { "yellow", ConsoleColor.Yellow },
             { "magenta", ConsoleColor.Magenta },
-            {"black", ConsoleColor.Black}
+            { "black", ConsoleColor.Black}
         };
-
-        // default style for all elements
-        //private int paddingLeft = 1;
-        //private int paddingTop = 1;
-        //private int width = Console.BufferWidth - 2;
-        //private int height = Console.BufferWidth - 2;
-        //private ConsoleColor color = ConsoleColor.Gray;
 
         public int AbsPaddingLeft { get; set; }
 

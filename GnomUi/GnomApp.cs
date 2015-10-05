@@ -1,16 +1,32 @@
 ﻿namespace GnomUi
 {
-    using GnomUi.Contracts;
     using System;
     using System.Linq;
 
+    using GnomUi.Contracts;
+    using GnomUi.EventModel;
+
     public class GnomApp : IGnomApp
     {
-        public GnomApp(IGnomTree view, IPressable startingElement, Action<GnomEventArgs> appMethod)
-        {
-            IPressable selected = startingElement;
+        public IPressable Selected { get; set; }
 
-            //view.Root.Display(0, 0);
+        public IConsoleManipulator Manipulator { get; set; }
+
+        public IGnomTree View { get; set; }
+
+        public Action<GnomEventArgs> KeyRoutingMethod { get; set; }
+
+        public GnomApp(IGnomTree view, IPressable startingElementId, IConsoleManipulator manipulator, Action<GnomEventArgs> keyRoutingMethod)
+        {
+            this.View = view;
+            this.KeyRoutingMethod = keyRoutingMethod;
+            this.Selected = startingElementId;
+            this.Manipulator = manipulator;
+        }
+
+        public void Start()
+        {
+            this.Manipulator.DrawGnomTree(this.View);
 
             while (true)
             {
@@ -18,27 +34,22 @@
 
                 if (keyInfo.Key == ConsoleKey.Enter)
                 {
-                    selected.FireEvent();
+                    Selected.FireEvent();
                 }
-                else if(selected.Neighbors.ContainsKey(keyInfo.Key))
+                else if (Selected.Neighbors.ContainsKey(keyInfo.Key))
                 {
-                    selected.IsSelected = false;
-                    selected = selected.Neighbors[keyInfo.Key];
-                    selected.IsSelected = true;
+                    Selected.IsSelected = false;
+                    Selected = Selected.Neighbors[keyInfo.Key];
+                    Selected.IsSelected = true;
                 }
                 else
                 {
-                    var args = new GnomEventArgs(view, selected, keyInfo);
-                    appMethod(args);
+                    var args = new GnomEventArgs(this.View, Selected, keyInfo);
+                    this.KeyRoutingMethod(args);
                 }
 
-                //view.Root.Display(0, 0);
+                this.Manipulator.DrawGnomTree(this.View);
             }
-        }
-
-        public void Start()
-        {
-            
         }
     }
 }

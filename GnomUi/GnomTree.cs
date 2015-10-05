@@ -35,6 +35,14 @@
             {
                 return this.idMap[id];
             }
+
+            set
+            {
+                if(!this.idMap.ContainsKey(value.Id))
+                {
+                    this.idMap.Add(value.Id, value);
+                }
+            }
         }
 
         public IEnumerator<IElement> GetEnumerator()

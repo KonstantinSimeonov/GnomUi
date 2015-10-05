@@ -1,8 +1,9 @@
 ﻿namespace GnomUi.EventModel
 {
-    using GnomUi.Contracts;
     using System;
 
+    using GnomUi.Contracts;
+    
     public class GnomEventArgs
     {
         public ConsoleKeyInfo PressedKeyInfo { get; private set; }

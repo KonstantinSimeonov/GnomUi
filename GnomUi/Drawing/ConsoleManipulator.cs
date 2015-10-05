@@ -28,10 +28,9 @@
 
         private static void DrawStringArray(string[] renderedElement, int top, int left)
         {
-            var row = top;
             foreach (var line in renderedElement)
             {
-                Console.SetCursorPosition(left, row++);
+                Console.SetCursorPosition(left, top++);
                 Console.WriteLine(line);
             }
         }

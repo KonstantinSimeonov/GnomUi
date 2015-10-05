@@ -1,4 +1,4 @@
-﻿namespace Interpreter
+﻿namespace Interpreter.Gadgets
 {
     internal static class StringExtensions
     {

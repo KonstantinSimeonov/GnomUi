@@ -131,26 +131,6 @@ top exit # # #";
             return result[result.GetLength(0) - 1, 0];
         }
 
-        public static bool IsInsideMatrix<T>(T[,] matrix, int row, int col)
-        {
-            var rowIsInRange = IsInRange(0, matrix.GetLength(0), row);
-            var colIsInRange = IsInRange(0, matrix.GetLength(1), col);
-
-            return rowIsInRange && colIsInRange;
-        }
-
-        /// <summary>
-        /// Returns true if an integer falls within a valid range.
-        /// </summary>
-        /// <param name="start">Start of the range(inclusive).</param>
-        /// <param name="end">End of the range(not inclusive).</param>
-        /// <param name="value">The value which is tested against the range.</param>
-        /// <returns></returns>
-        private static bool IsInRange(int start, int end, int value)
-        {
-            return start <= value && value < end;
-        }
-
         public static void GnomCompositeUiDemo()
         {
             // convenience
