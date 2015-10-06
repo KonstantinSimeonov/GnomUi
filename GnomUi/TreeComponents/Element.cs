@@ -17,7 +17,7 @@
         };
 
         private INodeElement parent;
-
+        
         public string Id { get; set; }
 
         public string Class { get; set; }
@@ -51,14 +51,15 @@
             }
         }
 
-        // TODO: should create new GnomEventArgs and pass then to OnClick
-
         public void FireEvent(GnomEventArgs args)
         {
+            if (this.OnClick == null)
+            {
+                return;
+            }
             this.OnClick(args);
         }
 
-        // TODO: OnClick event should be Action<GnomEventArgs>
         public Action<GnomEventArgs> OnClick { get; set; }
 
         public bool IsSelected { get; set; }
@@ -86,8 +87,7 @@
                 this.parent = value;
             }
         }
-
-        // ISSUE: AddChild doesn't add the element's id to the GnomTree id map
+        
         public INodeElement AddChild(INodeElement element)
         {
             element.Parent = this;
