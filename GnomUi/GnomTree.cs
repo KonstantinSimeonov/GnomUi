@@ -24,9 +24,10 @@
             this.idMap = idMap;
         }
 
-        public void AddChild(INodeElement parent)
+        public void AddChildToParent(INodeElement parent, INodeElement child)
         {
-            this.idMap[parent.Id] = parent;
+            parent.Children.Add(child);
+            this.idMap.Add(child.Id, child);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -40,8 +41,6 @@
             {
                 return this.idMap[id];
             }
-
-            // Why have a setter? It's not used.
 
             set
             {

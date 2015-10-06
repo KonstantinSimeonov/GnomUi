@@ -52,7 +52,7 @@
 
         // TODO: Implement iterative parsing and scrap this one
 
-        private INodeElement ParseRecursive(string root, string[] sub, int start, int end)
+        private INodeElement ParseRecursive(string root, string[] fragments, int start, int end)
         {
             var depth = root.Depth() + 1;
 
@@ -63,14 +63,13 @@
 
             for (int i = start + 1; i < end; i++)
             {
-                ThrowIfInvalidIndenting(sub[i], sub[i - 1], i);
+                ThrowIfInvalidIndenting(fragments[i], fragments[i - 1], i);
 
-                bool currentElementIsChildOfRoot = i == sub.Length - 1 || sub[i].Depth() <= depth;
+                bool currentElementIsChildOfRoot = i == fragments.Length - 1 || fragments[i].Depth() <= depth;
 
                 if (currentElementIsChildOfRoot)
                 {
-                    var trimmed = sub[i - 1].Trim();
-                    nextRoot.AddChild(ParseRecursive(sub[start], sub, start + 1, i + 1));
+                    nextRoot.AddChild(ParseRecursive(fragments[start], fragments, start + 1, i + 1));
                     start = i;
                 }
             }

@@ -73,7 +73,7 @@
                 return this.parent;
             }
 
-            private set
+            set
             {
                 // a validation : O
                 if (value != null && this.parent != null)
@@ -88,6 +88,8 @@
         // ISSUE: AddChild doesn't add the element's id to the GnomTree id map
         public INodeElement AddChild(INodeElement element)
         {
+            element.Parent = this;
+
             this.Children.Add(element);
             return this;
         }
