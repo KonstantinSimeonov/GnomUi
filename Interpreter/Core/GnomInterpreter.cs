@@ -51,6 +51,7 @@
         }
 
         // TODO: Implement iterative parsing and scrap this one
+
         private INodeElement ParseRecursive(string root, string[] sub, int start, int end)
         {
             var depth = root.Depth() + 1;

@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using GnomUi.Contracts;
 
-    public class Element : INodeElement, IPressable
+    public class Element :INodeElement, IPressable
     {
         private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
         {
@@ -106,16 +106,25 @@
         // TODO: terri-ugly code, needs some shining
         public virtual string[] ToStringArray()
         {
-            var topBottomBorder = ' ' + new string('_', this.Style.Width - 2);
-            var result = new string[this.Style.Height];
-            result[0] = (topBottomBorder);
+            char xBorderChar = '_';
+            char yBorderChar = '|';
 
-            for (int i = 1; i < this.Style.Height - 1; i++)
+            // building the top/bottom border and adding it
+
+            string topBottomBorder = ' ' + new string(xBorderChar, this.Style.Width - 2);
+            var result = new string[this.Style.Height];
+            result[0] = topBottomBorder;
+
+            // building the side borders
+
+            for (int i = 1;i < this.Style.Height - 1;i++)
             {
-                result[i] = ('|' + new string(' ', this.Style.Width - 2) + '|');
+                result[i] = yBorderChar + new string(' ', this.Style.Width - 2) + yBorderChar;
             }
 
-            result[result.Length - 1] = ('|' + new string('_', this.Style.Width - 2) + '|');
+            // adding the bottom border.
+
+            result[result.Length - 1] = yBorderChar + new string(xBorderChar, this.Style.Width - 2) + yBorderChar;
 
             return result;
         }
