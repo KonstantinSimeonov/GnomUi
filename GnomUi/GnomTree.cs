@@ -57,6 +57,19 @@
             return this.GetEnumerator();
         }
 
+        public void RemoveChildFromParent(INodeElement parent, INodeElement child)
+        {
+            if(parent.Children.Contains(child))
+            {
+                parent.RemoveElement(child);
+
+                if(!string.IsNullOrWhiteSpace(child.Id) && this.idMap.ContainsKey(child.Id))
+                {
+                    this.idMap.Remove(child.Id);
+                }
+            }
+        }
+
         public IEnumerator<IElement> GetEnumerator()
         {
             var nodes = new Stack<INodeElement>();

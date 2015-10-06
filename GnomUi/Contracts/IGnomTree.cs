@@ -9,5 +9,7 @@
         INodeElement this[string id] { get; set; }
 
         void AddChildToParent(INodeElement parent, INodeElement child);
+
+        void RemoveChildFromParent(INodeElement parent, INodeElement child);
     }
 }
