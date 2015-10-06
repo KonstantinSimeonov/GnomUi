@@ -8,6 +8,7 @@
     {
         public void DrawGnomTree(IGnomTree tree, int topStart = 0, int leftStart = 0)
         {
+            Console.Clear();
             DrawTreeRec(tree.Root, topStart, leftStart);
         }
 
