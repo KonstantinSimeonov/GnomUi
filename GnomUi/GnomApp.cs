@@ -1,13 +1,16 @@
 ﻿namespace GnomUi
 {
     using System;
-    using System.Linq;
 
     using GnomUi.Contracts;
     using GnomUi.EventModel;
 
     public class GnomApp : IGnomApp
     {
+        public GnomApp()
+        {
+        }
+
         public GnomApp(IGnomTree view, IPressable startingElementId, IConsoleManipulator manipulator, Action<GnomEventArgs> keyRoutingMethod)
         {
             this.View = view;

@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+
     using GnomUi.Contracts;
 
     public class GnomTree : IGnomTree, IEnumerable<IElement>
@@ -44,11 +45,11 @@
         {
             parent.Children.Add(child);
 
-            if(!this.idMap.ContainsKey(child.Id) && !string.IsNullOrWhiteSpace(child.Id))
+            if (!this.idMap.ContainsKey(child.Id) && !string.IsNullOrWhiteSpace(child.Id))
             {
                 this.idMap.Add(child.Id, child);
             }
-            
+
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -58,7 +59,7 @@
 
         public IEnumerator<IElement> GetEnumerator()
         {
-            var nodes = new Stack<IElement>();
+            var nodes = new Stack<INodeElement>();
 
             nodes.Push(this.Root);
 
@@ -68,12 +69,9 @@
 
                 yield return current;
 
-                if (current as INodeElement != null)
+                foreach (var node in current.Children)
                 {
-                    foreach (var node in (current as INodeElement).Children)
-                    {
-                        nodes.Push(node);
-                    }
+                    nodes.Push(node);
                 }
             }
         }

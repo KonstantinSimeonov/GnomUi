@@ -68,6 +68,10 @@
             {
                 this.Neighbors.Add(key, element);
             }
+            else
+            {
+                this.Neighbors[key] = element;
+            }
 
             if (!element.Neighbors.ContainsKey(reverseKeys[key]) || doubly)
             {

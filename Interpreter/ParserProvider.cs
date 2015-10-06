@@ -1,11 +1,11 @@
-﻿namespace Interpreter
+﻿namespace GnomInterpreter
 {
-    using Interpreter.Contracts;
-    using Interpreter.Core;
+    using GnomInterpreter.Contracts;
+    using GnomInterpreter.Core;
 
-    public class ParserProvider
+    public static class ParserProvider
     {
-        private static readonly IGnomConstructor constructor = new GnomConstructor(new GnomInterpreter(), new GnomStyleParser(), new SelectionGraphParser());
+        private static readonly IGnomConstructor constructor = new GnomConstructor(new GnomMarkupParser(), new GnomStyleParser(), new SelectionGraphParser());
 
         public static IGnomConstructor GetGnomConstructor()
         {

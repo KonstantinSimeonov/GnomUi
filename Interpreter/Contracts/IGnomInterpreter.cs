@@ -1,4 +1,4 @@
-﻿namespace Interpreter.Contracts
+﻿namespace GnomInterpreter.Contracts
 {
     using GnomUi.Contracts;
 

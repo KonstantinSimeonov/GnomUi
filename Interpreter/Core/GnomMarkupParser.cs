@@ -1,4 +1,4 @@
-﻿namespace Interpreter.Core
+﻿namespace GnomInterpreter.Core
 {
     using System;
     using System.Collections.Generic;
@@ -8,10 +8,10 @@
     using GnomUi.Contracts;
     using GnomUi.TreeComponents;
 
-    using Interpreter.Contracts;
-    using Interpreter.Gadgets;
+    using GnomInterpreter.Contracts;
+    using GnomInterpreter.Gadgets;
 
-    public class GnomInterpreter : IGnomInterpreter
+    public class GnomMarkupParser : IGnomInterpreter
     {
         private const char Id = '#';
         private const char Class = '.';
@@ -23,7 +23,7 @@
 
         private IDictionary<string, IList<INodeElement>> classMap;
 
-        internal GnomInterpreter()
+        internal GnomMarkupParser()
         {
             this.idMap = new Dictionary<string, INodeElement>();
             this.classMap = new Dictionary<string, IList<INodeElement>>();

@@ -1,4 +1,4 @@
-﻿namespace Interpreter.Gadgets
+﻿namespace GnomInterpreter.Gadgets
 {
     using System;
 

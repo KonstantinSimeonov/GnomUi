@@ -1,4 +1,4 @@
-﻿namespace Interpreter
+﻿namespace GnomInterpreter
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +10,8 @@
 
     internal class GnomConstructor : IGnomConstructor
     {
+        private const int NeighborCount = 4;
+
         private static readonly ConsoleKey[] directionKeysMap = new ConsoleKey[]
         { 
             ConsoleKey.LeftArrow, 
@@ -18,13 +20,13 @@
             ConsoleKey.DownArrow 
         };
 
-        private readonly GnomInterpreter structureParser;
+        private readonly GnomMarkupParser structureParser;
 
         private readonly GnomStyleParser styleParser;
 
         private readonly SelectionGraphParser selectionParser;
 
-        internal GnomConstructor(GnomInterpreter structureParser, GnomStyleParser styleParser, SelectionGraphParser selectionParser)
+        internal GnomConstructor(GnomMarkupParser structureParser, GnomStyleParser styleParser, SelectionGraphParser selectionParser)
         {
             this.selectionParser = selectionParser;
             this.styleParser = styleParser;
@@ -57,19 +59,15 @@
 
         private static void ApplySelectionMapToTree(IGnomTree tree, IDictionary<string, IList<string>> seletionMap)
         {
-            var directionIndex = 0;
-
             foreach (var nodeLinkInfo in seletionMap)
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < NeighborCount; i++)
                 {
                     var key = directionKeysMap[i];
                     var neighborForKey = tree[nodeLinkInfo.Value[i]];
                     tree[nodeLinkInfo.Key].Neighbors.Add(key, neighborForKey);
                 }
             }
-
-            directionIndex++;
         }
     }
 }

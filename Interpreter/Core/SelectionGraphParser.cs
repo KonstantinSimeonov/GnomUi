@@ -1,10 +1,10 @@
-﻿namespace Interpreter.Core
+﻿namespace GnomInterpreter.Core
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using Interpreter.Contracts;
+    using GnomInterpreter.Contracts;
 
     internal class SelectionGraphParser : IGnomSelectionParser
     {

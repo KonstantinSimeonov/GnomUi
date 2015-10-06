@@ -1,6 +1,7 @@
 ﻿namespace GnomUi.Contracts
 {
     using System;
+
     using GnomUi.EventModel;
 
     public interface IPressable : ISelectable

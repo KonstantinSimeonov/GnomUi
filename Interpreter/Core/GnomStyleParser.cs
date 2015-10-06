@@ -1,4 +1,4 @@
-﻿namespace Interpreter.Core
+﻿namespace GnomInterpreter.Core
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using GnomUi.Contracts;
     using GnomUi.TreeComponents;
 
-    using Interpreter.Contracts;
+    using GnomInterpreter.Contracts;
 
     internal class GnomStyleParser : IGnomStyleParser
     {

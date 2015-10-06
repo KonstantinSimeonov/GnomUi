@@ -6,9 +6,15 @@
 
     public class ConsoleManipulator : IConsoleManipulator
     {
+        public bool RefreshConsole { get; set; }
+
         public void DrawGnomTree(IGnomTree tree, int topStart = 0, int leftStart = 0)
         {
-            // Console.Clear();
+            if(this.RefreshConsole)
+            {
+                Console.Clear();
+            }
+
             DrawTreeRec(tree.Root, topStart, leftStart);
         }
 

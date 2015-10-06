@@ -1,6 +1,6 @@
 ﻿namespace GnomUi.Contracts
 {
-    public interface IElement : IPressable
+    public interface IElement : IPressable, ISelectable
     {
         string Id { get; set; }
 
