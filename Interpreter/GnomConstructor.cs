@@ -66,7 +66,6 @@
                     var key = directionKeysMap[i];
                     var neighborForKey = tree[nodeLinkInfo.Value[i]];
                     tree[nodeLinkInfo.Key].Neighbors.Add(key, neighborForKey);
-
                 }
             }
 

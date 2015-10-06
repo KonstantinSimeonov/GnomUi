@@ -1,21 +1,19 @@
 ﻿namespace Demo
 {
     using System;
-    using System.Collections.Generic;
 
     using GnomUi;
     using GnomUi.Contracts;
+    using GnomUi.Drawing;
+    using GnomUi.TreeComponents;
 
     using Interpreter;
-    using GnomUi.TreeComponents;
-    using GnomUi.Drawing;
 
-    class Demo
+    public class Demo
     {
-        static void Main()
+        public static void Main()
         {
             Console.CursorVisible = false;
-            // GnomCompositeUiDemo();
             var uiDescription = @"root #root .root-element
     box #container .div
         field #field .field
@@ -80,28 +78,28 @@ top exit # # #";
             var gnomBuilder = ParserProvider.GetGnomConstructor();
             var result = gnomBuilder.Construct(uiDescription, graph, styles);
             var drawer = new ConsoleManipulator();
-            var matrix = new string[,]{
-                {"1", "2", "3"},
-                {"4", "5", "6"}
+            var matrix = new string[,]
+            {
+                { "1", "2", "3" },
+                { "4", "5", "6" }
             };
             var startingSelection = AddMatrixToGnom(result["field"], matrix);
             startingSelection.LinkTo(ConsoleKey.DownArrow, result["restart"], true);
             var app = new GnomApp(result, startingSelection, drawer, x => { });
 
-            result["restart"].OnClick = (x => Console.BackgroundColor = ConsoleColor.Red);
+            result["restart"].OnClick = x => Console.BackgroundColor = ConsoleColor.Red;
             result["undo"].OnClick = x => Console.BackgroundColor = ConsoleColor.Blue;
             result["exit"].OnClick = x => Environment.Exit(0);
 
             app.Start();
-            //drawer.DrawGnomTree(result);
         }
 
         public static IPressable AddMatrixToGnom(INodeElement field, string[,] matrix)
         {
             var result = new TextElement[matrix.GetLength(0), matrix.GetLength(1)];
-            for (int i = 0;i < matrix.GetLength(0);i++)
+            for (int i = 0; i < matrix.GetLength(0); i++)
             {
-                for (int j = 0;j < matrix.GetLength(1);j++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
                     result[i, j] = new TextElement(matrix[i, j])
                     {
@@ -122,7 +120,6 @@ top exit # # #";
                     {
                         result[i, j].LinkTo(ConsoleKey.LeftArrow, result[i, j - 1]);
                     }
-
                 }
             }
 

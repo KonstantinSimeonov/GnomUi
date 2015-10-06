@@ -1,6 +1,7 @@
-﻿using System;
-namespace Interpreter.Gadgets
+﻿namespace Interpreter.Gadgets
 {
+    using System;
+
     internal static class StringExtensions
     {
         /// <summary>
@@ -21,7 +22,7 @@ namespace Interpreter.Gadgets
         /// <returns></returns>
         public static string RemoveFirst(this string str)
         {
-            if(string.IsNullOrEmpty(str))
+            if (string.IsNullOrEmpty(str))
             {
                 return string.Empty;
             }

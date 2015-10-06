@@ -10,8 +10,6 @@
         private readonly IDictionary<string, INodeElement> idMap;
         private readonly IDictionary<string, IList<INodeElement>> classMap;
 
-        public INodeElement Root { get; private set; }
-
         public GnomTree(INodeElement root)
         {
             this.Root = root;
@@ -24,16 +22,7 @@
             this.idMap = idMap;
         }
 
-        public void AddChildToParent(INodeElement parent, INodeElement child)
-        {
-            parent.Children.Add(child);
-            this.idMap.Add(child.Id, child);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+        public INodeElement Root { get; private set; }
 
         public INodeElement this[string id]
         {
@@ -44,11 +33,22 @@
 
             set
             {
-                if(!this.idMap.ContainsKey(value.Id))
+                if (!this.idMap.ContainsKey(value.Id))
                 {
                     this.idMap.Add(value.Id, value);
                 }
             }
+        }
+
+        public void AddChildToParent(INodeElement parent, INodeElement child)
+        {
+            parent.Children.Add(child);
+            this.idMap.Add(child.Id, child);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
 
         public IEnumerator<IElement> GetEnumerator()

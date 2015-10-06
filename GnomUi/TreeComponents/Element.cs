@@ -1,28 +1,22 @@
 ﻿namespace GnomUi.TreeComponents
 {
     using System;
-
     using System.Collections.Generic;
-    using GnomUi.Contracts;
-    using EventModel;
 
-    public class Element :INodeElement, IPressable
+    using EventModel;
+    using GnomUi.Contracts;
+
+    public class Element : INodeElement, IPressable
     {
         private static readonly IDictionary<ConsoleKey, ConsoleKey> reverseKeys = new Dictionary<ConsoleKey, ConsoleKey>()
         {
             { ConsoleKey.UpArrow, ConsoleKey.DownArrow },
             { ConsoleKey.LeftArrow, ConsoleKey.RightArrow },
             { ConsoleKey.DownArrow, ConsoleKey.UpArrow },
-            { ConsoleKey.RightArrow, ConsoleKey.LeftArrow}
+            { ConsoleKey.RightArrow, ConsoleKey.LeftArrow }
         };
 
         private INodeElement parent;
-        
-        public string Id { get; set; }
-
-        public string Class { get; set; }
-
-        public IStyle Style { get; set; }
 
         public Element(bool selected = false, string id = "", string className = "")
         {
@@ -32,6 +26,40 @@
             this.IsSelected = selected;
             this.Neighbors = new Dictionary<ConsoleKey, IPressable>();
             this.Children = new List<INodeElement>();
+        }
+
+        public string Id { get; set; }
+
+        public string Class { get; set; }
+
+        public IStyle Style { get; set; }
+
+        public bool IsSelected { get; set; }
+
+        public IDictionary<ConsoleKey, IPressable> Neighbors { get; private set; }
+
+        public IList<INodeElement> Children { get; private set; }
+
+        public Action<GnomEventArgs> OnClick { get; set; }
+
+        // TODO: implement setting in parser
+        public INodeElement Parent
+        {
+            get
+            {
+                return this.parent;
+            }
+
+            set
+            {
+                // a validation : O
+                if (value != null && this.parent != null)
+                {
+                    throw new InvalidOperationException("gnom doesnt allow changing the parent of an element that already has a parent");
+                }
+
+                this.parent = value;
+            }
         }
 
         public void LinkTo(ConsoleKey key, IPressable element, bool doubly = true)
@@ -57,37 +85,10 @@
             {
                 return;
             }
+
             this.OnClick(args);
         }
 
-        public Action<GnomEventArgs> OnClick { get; set; }
-
-        public bool IsSelected { get; set; }
-
-        public IDictionary<ConsoleKey, IPressable> Neighbors { get; private set; }
-
-        public IList<INodeElement> Children { get; private set; }
-
-        // TODO: implement setting in parser
-        public INodeElement Parent
-        {
-            get
-            {
-                return this.parent;
-            }
-
-            set
-            {
-                // a validation : O
-                if (value != null && this.parent != null)
-                {
-                    throw new InvalidOperationException("gnom doesnt allow changing the parent of an element that already has a parent");
-                }
-
-                this.parent = value;
-            }
-        }
-        
         public INodeElement AddChild(INodeElement element)
         {
             element.Parent = this;
@@ -110,25 +111,22 @@
         // TODO: terri-ugly code, needs some shining
         public virtual string[] ToStringArray()
         {
-            char xBorderChar = '_';
-            char yBorderChar = '|';
+            char colBorderChar = '_';
+            char rowBorderChar = '|';
 
             // building the top/bottom border and adding it
-
-            string topBottomBorder = ' ' + new string(xBorderChar, this.Style.Width - 2);
+            string topBottomBorder = ' ' + new string(colBorderChar, this.Style.Width - 2);
             var result = new string[this.Style.Height];
             result[0] = topBottomBorder;
 
             // building the side borders
-
-            for (int i = 1;i < this.Style.Height - 1;i++)
+            for (int i = 1; i < this.Style.Height - 1; i++)
             {
-                result[i] = yBorderChar + new string(' ', this.Style.Width - 2) + yBorderChar;
+                result[i] = rowBorderChar + new string(' ', this.Style.Width - 2) + rowBorderChar;
             }
 
             // adding the bottom border.
-
-            result[result.Length - 1] = yBorderChar + new string(xBorderChar, this.Style.Width - 2) + yBorderChar;
+            result[result.Length - 1] = rowBorderChar + new string(colBorderChar, this.Style.Width - 2) + rowBorderChar;
 
             return result;
         }

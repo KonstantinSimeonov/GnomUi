@@ -1,22 +1,13 @@
 ﻿namespace GnomUi.TreeComponents
 {
     using System;
-
-    using GnomUi.Contracts;
     using System.Collections.Generic;
     using System.Text;
 
+    using GnomUi.Contracts;
+
     public class Style : IStyle
     {
-        private readonly IDictionary<string, string> styleMap = new Dictionary<string, string>()
-        {
-            { "left", "1" },
-            { "top", "1" },
-            { "height", "5" },
-            { "width", "5" },
-            { "color", "gray" },
-        };
-
         private static readonly IDictionary<string, ConsoleColor> colors = new Dictionary<string, ConsoleColor>()
         {
             { "gray", ConsoleColor.Gray },
@@ -26,25 +17,21 @@
             { "white", ConsoleColor.White },
             { "yellow", ConsoleColor.Yellow },
             { "magenta", ConsoleColor.Magenta },
-            { "black", ConsoleColor.Black}
+            { "black", ConsoleColor.Black }
+        };
+
+        private readonly IDictionary<string, string> styleMap = new Dictionary<string, string>()
+        {
+            { "left", "1" },
+            { "top", "1" },
+            { "height", "5" },
+            { "width", "5" },
+            { "color", "gray" },
         };
 
         public int AbsPaddingLeft { get; set; }
 
         public int AbsPaddingTop { get; set; }
-
-        public string this[string propertyName]
-        {
-            get
-            {
-                return this.styleMap[propertyName];
-            }
-
-            set
-            {
-                this.styleMap[propertyName] = value;
-            }
-        }
 
         public int PaddingLeft
         {
@@ -109,6 +96,19 @@
             set
             {
                 this["color"] = value.ToString().ToLower();
+            }
+        }
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                return this.styleMap[propertyName];
+            }
+
+            set
+            {
+                this.styleMap[propertyName] = value;
             }
         }
 

@@ -1,7 +1,8 @@
 ﻿namespace Interpreter.Contracts
 {
-    using GnomUi.Contracts;
     using System.Collections.Generic;
+
+    using GnomUi.Contracts;
 
     internal interface IGnomStyleParser
     {

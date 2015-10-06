@@ -5,9 +5,9 @@
     using System.Linq;
 
     using GnomUi.Contracts;
+    using GnomUi.TreeComponents;
 
     using Interpreter.Contracts;
-    using GnomUi.TreeComponents;
 
     internal class GnomStyleParser : IGnomStyleParser
     {

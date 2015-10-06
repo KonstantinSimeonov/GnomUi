@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using GnomUi.Contracts;
     using GnomUi;
+    using GnomUi.Contracts;
+    using GnomUi.TreeComponents;
 
     using Interpreter.Contracts;
     using Interpreter.Gadgets;
-    using GnomUi.TreeComponents;
 
     public class GnomInterpreter : IGnomInterpreter
     {
@@ -17,10 +17,8 @@
         private const char Class = '.';
         private const char Text = ':';
 
-        private const StringSplitOptions RemoveEmpty = StringSplitOptions.RemoveEmptyEntries;
-
         private static readonly char[] attributeCharacters = new char[] { Id, Class, Text };
-        
+
         private IDictionary<string, INodeElement> idMap;
 
         private IDictionary<string, IList<INodeElement>> classMap;
@@ -35,9 +33,9 @@
         {
             this.ClearMaps();
 
-            var args = treeDescription.SplitBy(Environment.NewLine).Concat(new string[] { "" }).ToArray();
+            var args = treeDescription.SplitBy(Environment.NewLine).Concat(new string[] { string.Empty }).ToArray();
 
-            var root = ParseRecursive(args[0], args, 1, args.Length);
+            var root = this.ParseRecursive(args[0], args, 1, args.Length);
 
             var tree = new GnomTree(root, this.idMap, this.classMap);
 
@@ -51,7 +49,6 @@
         }
 
         // TODO: Implement iterative parsing and scrap this one
-
         private INodeElement ParseRecursive(string root, string[] fragments, int start, int end)
         {
             var depth = root.Depth() + 1;
@@ -69,7 +66,7 @@
 
                 if (currentElementIsChildOfRoot)
                 {
-                    nextRoot.AddChild(ParseRecursive(fragments[start], fragments, start + 1, i + 1));
+                    nextRoot.AddChild(this.ParseRecursive(fragments[start], fragments, start + 1, i + 1));
                     start = i;
                 }
             }
@@ -91,7 +88,7 @@
         {
             if (idMap.ContainsKey(nextRoot.Id))
             {
-                throw new InvalidOperationException("Duplicate Ids in gnom resource at row {0}. Id name: {1}".Format(row + 1,  nextRoot.Id));
+                throw new InvalidOperationException("Duplicate Ids in gnom resource at row {0}. Id name: {1}".Format(row + 1, nextRoot.Id));
             }
 
             idMap.Add(nextRoot.Id, nextRoot);
@@ -118,7 +115,9 @@
 
             // falthrough switch base on dictionary
             new Switch<IDictionary<char, string[]>>(attributeGroups, true)
-                    .Case(attributeGroups.ContainsKey(Id), () =>
+                    .Case(
+                        attributeGroups.ContainsKey(Id),
+                        () =>
                         {
                             if (attributeGroups[Id].Length > 1)
                             {
