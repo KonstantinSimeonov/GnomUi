@@ -43,7 +43,12 @@
         public void AddChildToParent(INodeElement parent, INodeElement child)
         {
             parent.Children.Add(child);
-            this.idMap.Add(child.Id, child);
+
+            if(!this.idMap.ContainsKey(child.Id) && !string.IsNullOrWhiteSpace(child.Id))
+            {
+                this.idMap.Add(child.Id, child);
+            }
+            
         }
 
         IEnumerator IEnumerable.GetEnumerator()

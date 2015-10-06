@@ -32,11 +32,8 @@
             {
                 var keyInfo = Console.ReadKey();
                 var args = new GnomEventArgs(this.View, this.Selected, keyInfo);
-                if (keyInfo.Key == ConsoleKey.Enter)
-                {
-                    this.Selected.FireEvent(args);
-                }
-                else if (this.Selected.Neighbors.ContainsKey(keyInfo.Key))
+
+                if (this.Selected.Neighbors.ContainsKey(keyInfo.Key))
                 {
                     this.Selected.IsSelected = false;
                     this.Selected = this.Selected.Neighbors[keyInfo.Key];

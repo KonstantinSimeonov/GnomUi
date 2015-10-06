@@ -64,7 +64,10 @@
 
         public void LinkTo(ConsoleKey key, IPressable element, bool doubly = true)
         {
-            this.Neighbors.Add(key, element);
+            if(!this.Neighbors.ContainsKey(key))
+            {
+                this.Neighbors.Add(key, element);
+            }
 
             if (!element.Neighbors.ContainsKey(reverseKeys[key]) || doubly)
             {

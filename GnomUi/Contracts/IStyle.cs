@@ -17,5 +17,7 @@
         int Height { get; set; }
 
         ConsoleColor Color { get; set; }
+
+        string this[string propertyName] { get; set; }
     }
 }
