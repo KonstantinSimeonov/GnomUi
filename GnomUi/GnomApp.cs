@@ -31,10 +31,10 @@
             while (true)
             {
                 var keyInfo = Console.ReadKey();
-
+                var args = new GnomEventArgs(this.View, this.Selected, keyInfo);
                 if (keyInfo.Key == ConsoleKey.Enter)
                 {
-                    Selected.FireEvent();
+                    Selected.FireEvent(args);
                 }
                 else if (Selected.Neighbors.ContainsKey(keyInfo.Key))
                 {
@@ -44,7 +44,6 @@
                 }
                 else
                 {
-                    var args = new GnomEventArgs(this.View, Selected, keyInfo);
                     this.KeyRoutingMethod(args);
                 }
 

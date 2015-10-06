@@ -255,7 +255,7 @@ top exit # # #";
 
                 if (keyInfo.Key == ConsoleKey.Enter && selected as IPressable != null)
                 {
-                    (selected as IPressable).FireEvent();
+                //    (selected as IPressable).FireEvent();
                 }
                 else if (selected.Neighbors.ContainsKey(keyInfo.Key))
                 {

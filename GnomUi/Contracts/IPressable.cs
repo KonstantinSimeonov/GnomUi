@@ -1,11 +1,12 @@
 ﻿namespace GnomUi.Contracts
 {
     using System;
+    using GnomUi.EventModel;
 
     public interface IPressable : ISelectable
     {
-        Action<IElement> OnClick { get; set; }
+        Action<GnomEventArgs> OnClick { get; set; }
 
-        void FireEvent();
+        void FireEvent(GnomEventArgs args);
     }
 }

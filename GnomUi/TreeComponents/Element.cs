@@ -4,6 +4,7 @@
 
     using System.Collections.Generic;
     using GnomUi.Contracts;
+    using EventModel;
 
     public class Element :INodeElement, IPressable
     {
@@ -51,13 +52,14 @@
         }
 
         // TODO: should create new GnomEventArgs and pass then to OnClick
-        public void FireEvent()
+
+        public void FireEvent(GnomEventArgs args)
         {
-            this.OnClick(this);
+            this.OnClick(args);
         }
 
         // TODO: OnClick event should be Action<GnomEventArgs>
-        public Action<IElement> OnClick { get; set; }
+        public Action<GnomEventArgs> OnClick { get; set; }
 
         public bool IsSelected { get; set; }
 
